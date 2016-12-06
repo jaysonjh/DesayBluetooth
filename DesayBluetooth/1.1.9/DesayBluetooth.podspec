@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.license = "MIT"
   s.authors = {"Desay"=>"454040106@qq.com"}
   s.homepage = "http://59.33.252.108/Framework/dsble"
-  s.frameworks = "CoreBluetooth"
+  s.frameworks = "CoreBluetooth",'DesayBluetooth'
   s.libraries = "z"
 
   s.platform     = :ios
@@ -16,5 +16,8 @@ Pod::Spec.new do |s|
 
   s.vendored_framework   = 'DesayBluetoothAPI.framework','DesayBluetooth.framework'
 
-
+# API模块
+    s.subspec 'DesayBluetoothAPI' do |sp|
+        sp.vendored_frameworks = 'DesayBluetooth.framework'
+    end
 end
