@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.platform     = :ios
   s.ios.deployment_target = "8.0"
   s.requires_arc = true
-  s.source       = { :git => "http://59.33.252.108/Framework/dsble.git", :tag => s.version.to_s }
+  s.source       = { :git => "ssh://git@59.33.252.108:122/Framework/dsble.git", :tag => s.version.to_s }
 
 
   s.vendored_framework   = 'DesayBluetooth.framework'
