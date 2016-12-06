@@ -15,6 +15,9 @@ Pod::Spec.new do |s|
 
 
   s.vendored_framework   = 'DesayBluetoothAPI.framework'
-  s.vendored_framework   = 'DesayBluetooth.framework'
 
+ # API模块
+    s.subspec 'DesayBluetoothAPI' do |sp|
+        sp.vendored_frameworks = 'DesayBluetooth.framework'
+    end
 end
