@@ -13,12 +13,8 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.source       = { :git => "ssh://git@59.33.252.108:122/Framework/dsble.git", :tag => s.version.to_s }
 
-  s.default_subspecs    = 'DesayBluetoothAPI'
 
-  s.vendored_framework   = 'DesayBluetoothAPI.framework'
+  s.vendored_framework   = 'DesayBluetoothAPI.framework','DesayBluetooth.framework'
 
- # API模块
-    s.subspec 'DesayBluetoothAPI' do |sp|
-        sp.vendored_frameworks = 'DesayBluetooth.framework'
-    end
+
 end
