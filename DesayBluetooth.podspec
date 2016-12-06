@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = "DesayBluetooth"
-  s.version = "1.1.8"
+  s.version = “1.1.9”
   s.summary = "DesayBluetooth is a Bluetooth library"
   s.license = "MIT"
   s.authors = {"Desay"=>"454040106@qq.com"}
@@ -15,5 +15,6 @@ Pod::Spec.new do |s|
 
 
   s.vendored_framework   = 'DesayBluetooth.framework'
+  s.vendored_framework   = 'DesayBluetoothAPI.framework'
 
 end
