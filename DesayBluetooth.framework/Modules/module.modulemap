@@ -1,0 +1,6 @@
+framework module DesayBluetooth {
+  umbrella header "DesayBluetooth.h"
+
+  export *
+  module * { export * }
+}
