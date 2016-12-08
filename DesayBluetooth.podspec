@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = "DesayBluetooth"
-  s.version = "1.1.9"
+  s.version = "1.1.10"
   s.summary = "DesayBluetooth is a Bluetooth library"
   s.license = "MIT"
   s.authors = {"Desay"=>"454040106@qq.com"}
@@ -14,10 +14,6 @@ Pod::Spec.new do |s|
   s.source       = { :git => "ssh://git@59.33.252.108:122/Framework/dsble.git", :tag => s.version.to_s }
 
 
-  s.vendored_framework   = 'DesayBluetoothAPI.framework','DesayBluetooth.framework'
+  s.vendored_framework   = '*.framework'
 
-# API模块
-    s.subspec 'DesayBluetoothAPI' do |sp|
-        sp.vendored_frameworks = 'DesayBluetoothAPI/DesayBluetooth.framework'
-    end
 end
