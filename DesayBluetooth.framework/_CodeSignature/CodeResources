@@ -10,7 +10,7 @@
 		</data>
 		<key>Headers/DSBLECentralManager.h</key>
 		<data>
-		CfjfwboQxqy22YU8Ow5pxLKgoj4=
+		TMFEi+4FCaxrJ4lw8M9JpYGYUx0=
 		</data>
 		<key>Headers/DSBLEPeripheral.h</key>
 		<data>
@@ -30,7 +30,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		mmFZRAr2Zf1fQ1gfBPodduP1w8c=
+		91ITKXE3jJKifysznjj1gV09wZ0=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -54,11 +54,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			CfjfwboQxqy22YU8Ow5pxLKgoj4=
+			TMFEi+4FCaxrJ4lw8M9JpYGYUx0=
 			</data>
 			<key>hash2</key>
 			<data>
-			sHVfjmY6V8Rf4uExG9X0zFh5rgkEUrmcs7IBQ8f6Kss=
+			CFD6rdFfJ6SA6fyTLOxBsF0t/aja8me+n6g4BGn06hg=
 			</data>
 		</dict>
 		<key>Headers/DSBLEPeripheral.h</key>

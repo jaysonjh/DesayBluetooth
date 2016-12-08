@@ -40,7 +40,7 @@ extern NSString * const kTakeThresh;
 /**
  *  睡眠算法参数设置
  */
-@interface WMSleepAlgorithmConfiguration : NSObject
+@interface DSBLESleepAlgorithmConfiguration : NSObject
 
 /**
  *  设置的醒来时长阈值

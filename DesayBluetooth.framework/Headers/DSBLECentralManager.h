@@ -227,6 +227,12 @@ typedef NS_ENUM(NSInteger, DSBLEDataTransmitMode) {
  */
 - (void)disconnectCurrentChannelConnectedPeripheral;
 
+//放弃连接（当前扫描出来的设备）
+/**
+ *  CentrallManager cancel Current Connecting Peripheral
+ */
+- (void)cancelCurrentConnectingPeripheral:(CBPeripheral *_Nonnull)periphheral;
+
 
 //添加断开重连接的设备
 /**
