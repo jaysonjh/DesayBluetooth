@@ -194,7 +194,7 @@ extern NSString * const kDSBLEAppNotifyWeibo;
 @end
 
 /**
- * 睡眠原始数据
+ * 睡眠原始数据端，由睡眠块组成
  * Sleep original data
  */
 @interface DSBLEOriginalSleepInfo : NSObject
@@ -210,5 +210,17 @@ extern NSString * const kDSBLEAppNotifyWeibo;
 @property (assign, nonatomic) BOOL isValid;
 @property (assign, nonatomic) NSInteger staticTime;
 @property (strong, nonatomic) NSArray *sleepInterval;
+@end
+
+
+/**
+ * 睡眠原始数据块
+ */
+@interface DSBLEOriginalSleepBlock : NSObject
+@property (strong, nonatomic) NSDate *sDate;
+@property (strong, nonatomic) NSString *sTime;
+@property (strong, nonatomic) NSNumber *value;
+@property (strong, nonatomic) NSNumber *blockType;
+@property (strong, nonatomic) NSNumber *timeInterval;
 @end
 

@@ -13,6 +13,8 @@
 @class DSBLESportInfo;
 @class DSBLEHeartrate;
 @class DSBLESleepInfo;
+@class DSBLEOriginalSleepBlock;
+
 @protocol DSBLESyncHandlerSyncProgressDelegate <NSObject>
 @optional
 /**
@@ -56,6 +58,14 @@
  */
 
 - (void)dataSyncFinishedWithOriginalSleepInfo:(nullable NSArray<DSBLEOriginalSleepInfo *> *)originalSleepInfo sportInfo:(nullable NSArray<DSBLESportInfo *> *)sportInfo rateInfo:(nullable NSArray<DSBLEHeartrate *> *)rateInfo;
+
+/* 同步后的数据
+ * synchronized data
+ * @pram originalSleepblock 睡眠原始数据块
+ * @pram sportInfo 运动数据
+ * @pram rateInfo 心率数据
+ */
+- (void)dataSyncFinishedWithOriginalSleepBlock:(nullable NSArray<DSBLEOriginalSleepBlock *> *)originalSleepInfo sportInfo:(nullable NSArray<DSBLESportInfo *> *)sportInfo rateInfo:(nullable NSArray<DSBLEHeartrate *> *)rateInfo;
 
 @end
 

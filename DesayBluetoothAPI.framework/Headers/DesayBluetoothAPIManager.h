@@ -108,6 +108,17 @@
 
 + (void)APIVersion;
 + (nonnull DesayBluetoothAPIManager *)shareManager;
+
+/**
+ * API have two Mode(Debug,Release). API Default in Release Mode.
+ * In Release Mode,after sync data from bracelet,API will ask bracelet clean DATA.
+ * In Debug Mode,after sync data from bracelet,API will not ask bracelet clean DATA.
+ * Debug Mode for Developer to check sync data is current or not.
+ *
+ @param isDebug YES for Debug Mode/ No for Release
+ */
+- (void)setAPIMode:(BOOL)isDebug;
+- (BOOL)APIMode;
 - (nonnull DSBLEBluetoothData *)getDeviceInfo:(nonnull NSString *)deviceName;
 - (nullable DSBLEBluetoothData *)getCurrentDeviceInfo;
 - (nullable DSBLEPeripheral *)currentDevice;
