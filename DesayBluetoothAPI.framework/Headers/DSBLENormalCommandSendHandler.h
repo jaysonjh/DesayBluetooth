@@ -225,11 +225,11 @@ typedef void (^DSBLECentralAPIDataCallback)(NSString *_Nullable dataString, NSEr
 - (void)sendSPERUNOpen:(BOOL)open callback:(nonnull DSBLECentralAPIDataCallback)callback;
 
 /**
- * 回写步数
- * write back step
+ * 查询步数/回写步数，当步数参数step为空为查询步数，当不为空为回写步数
+ * get step / write back step
  * @param step 回写的步数 write-back step
  */
-- (void)sendPACE:(nonnull NSNumber *)step callback:(nonnull DSBLECentralAPIDataCallback)callback;
+- (void)sendPACE:(nullable NSNumber *)step callback:(nonnull DSBLECentralAPIDataCallback)callback;
 
 /**
  * 用于兼容老项目
