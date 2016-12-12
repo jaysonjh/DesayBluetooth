@@ -116,11 +116,37 @@
  */
 - (BOOL)isScanning;
 
+
+/**
+ * 
+ *  add delegate for @link DSBLEAPIManagerScanConnectDelegate in class @link DesayBluetoothAPIManager. To avoid repetition add delegate,you must call @link haveTargetOfClass: in this class before you add delegate.If you don't want use it ,you must remove it by @link removeTarget: in this class
+ *  @param delegate id
+ *  @param delegateQueue dispatch_queue_t
+ */
+
 - (void)addTarget:(id)delegate delegateQueue:(dispatch_queue_t)delegateQueue;
 
+/**
+ *
+ *  add delegate for @link DSBLEAPIManagerScanConnectDelegate in class @link DesayBluetoothAPIManager.  To avoid repetition add delegate,you must call @link haveTargetOfClass: in this class before you add delegate.If you don't want use it ,you must remove it by @link removeTarget: in this class
+ *  @param delegate id
+ */
 - (void)addTargetOnGlobalQueue:(id)delegate;
 
+/**
+ *
+ *  remove delegate for @link DSBLEAPIManagerScanConnectDelegate in class @link DesayBluetoothAPIManager
+ *  @param delegate id
+ */
+
 - (void)removeTarget:(id)delegate;
+
+/**
+ *
+ *  check the delegate of @link DSBLEAPIManagerScanConnectDelegate in class @link DesayBluetoothAPIManager
+ *  @param aclass Class
+ *  @return  * YES -->  had the delegate,    NO-->not have the delegate
+ */
 
 - (BOOL)haveTargetOfClass:(Class)aclass;
 
