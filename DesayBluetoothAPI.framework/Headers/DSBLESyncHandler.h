@@ -44,26 +44,26 @@
 
 /* 同步后的数据
  * synchronized data
- * @pram sleepInfo 睡眠数据
- * @pram sportInfo 运动数据
- * @pram rateInfo 心率数据
+ * @pram sleepInfo sleep data
+ * @pram sportInfo sport data
+ * @pram rateInfo heart rate data
  */
 - (void)dataSyncFinishedWithSleepInfo:(nullable NSArray<DSBLESleepInfo *> *)sleepInfo sportInfo:(nullable NSArray<DSBLESportInfo *> *)sportInfo rateInfo:(nullable NSArray<DSBLEHeartrate *> *)rateInfo;
 
 /* 同步后的数据
  * synchronized data
- * @pram originalSleepInfo 睡眠原始数据
- * @pram sportInfo 运动数据
- * @pram rateInfo 心率数据
+ * @pram originalSleepInfo original sleep data
+ * @pram sportInfo sport data
+ * @pram rateInfo heart rate data
  */
 
 - (void)dataSyncFinishedWithOriginalSleepInfo:(nullable NSArray<DSBLEOriginalSleepInfo *> *)originalSleepInfo sportInfo:(nullable NSArray<DSBLESportInfo *> *)sportInfo rateInfo:(nullable NSArray<DSBLEHeartrate *> *)rateInfo;
 
 /* 同步后的数据
  * synchronized data
- * @pram originalSleepblock 睡眠原始数据块
- * @pram sportInfo 运动数据
- * @pram rateInfo 心率数据
+ * @pram originalSleepblock original sleep state
+ * @pram sportInfo sport data
+ * @pram rateInfo heart rate data
  */
 - (void)dataSyncFinishedWithOriginalSleepBlock:(nullable NSArray<DSBLEOriginalSleepBlock *> *)originalSleepInfo sportInfo:(nullable NSArray<DSBLESportInfo *> *)sportInfo rateInfo:(nullable NSArray<DSBLEHeartrate *> *)rateInfo;
 
@@ -71,9 +71,11 @@
 
 @interface DSBLESyncHandler : NSObject
 @property (weak,nonatomic) id<DSBLESyncHandlerSyncProgressDelegate>_Nullable syncDelegate;
-// 请求同步 request sync
+/* 请求同步 request sync
+ */
 - (void) handlerSyncRequest;
-// 配置写数据的callback use for configuring writed data
+/* 配置写数据的callback use for configuring writed data
+ */
 - (void)configPeripheralWriteDataToCharacteristicCallback;
 
 @end

@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+
+/**
+ Device Utils
+ */
 @interface DSBLEDeviceUtils : NSObject
 /**
  * 获取格式化的mac地址

@@ -24,9 +24,25 @@ typedef NS_ENUM(NSInteger,BLELanguageType) {
  * heart rate class
  */
 @interface DSBLEHeartrate : NSObject
+
+/**
+ Time for heart rate
+ */
 @property (strong, nonatomic) NSString *time;
+
+/**
+ Heart rate
+ */
 @property (assign, nonatomic) NSInteger rate;
+
+/**
+ Type
+ */
 @property (assign, nonatomic) NSInteger type;
+
+/**
+ UTC for Date
+ */
 @property (strong, nonatomic) NSDate *utcTime;
 @end
 
@@ -36,12 +52,40 @@ typedef NS_ENUM(NSInteger,BLELanguageType) {
  */
 @interface DSBLESleepInfo : NSObject
 //@property (strong, nonatomic) NSString *gdate;
+
+/**
+ Begin Time, UTC
+ */
 @property (strong, nonatomic) NSString *beginTime;
+
+/**
+ End Time,UTC
+ */
 @property (strong, nonatomic) NSString *endTime;
+
+/**
+ Sleep total duration,Unit:min.
+ */
 @property (strong, nonatomic) NSNumber *totalDuration;
+
+/**
+ Wake up times,@NS_DEPRECATED
+ */
 @property (strong, nonatomic) NSNumber *wakeTime;
+
+/**
+ Sleep quantity,@NS_DEPRECATED
+ */
 @property (strong, nonatomic) NSNumber *quantity;
+
+/**
+ Array for DSBLESleepState
+ */
 @property (strong, nonatomic) NSArray *sleepStates;
+
+/**
+ Array for DSBLEHeartrate @NS_DEPRECATED
+ */
 @property (strong, nonatomic) NSArray *heartrates;
 @end
 
@@ -50,8 +94,22 @@ typedef NS_ENUM(NSInteger,BLELanguageType) {
  * sleep state class
  */
 @interface DSBLESleepState : NSObject
+
+/**
+ Begin Time, UTC
+ */
 @property (strong, nonatomic) NSString *startTime;
+
+/**
+ End Time,UTC
+ */
 @property (strong, nonatomic) NSString *endTime;
+
+/**
+ state = 0 // awake
+ state = 2 // shallow sleep
+ state = 3 // deep sleep
+ */
 @property (assign, nonatomic) NSInteger state;
 
 @end
@@ -62,21 +120,34 @@ typedef NS_ENUM(NSInteger,BLELanguageType) {
  */
 @interface DSBLESportInfo : NSObject
 @property (strong ,nonatomic) NSString *startTime;
+
+
+/**
+ Time for step, UTC
+ */
 @property (strong ,nonatomic) NSString *endTime;
+
+
+/**
+ state=1 // sit
+ state=2 // walk
+ state=3 // walk quickly /run
+ */
 @property (strong ,nonatomic) NSNumber *state;
 @property (strong ,nonatomic) NSNumber *distance;
 @property (strong ,nonatomic) NSNumber *calorie;
 @property (strong ,nonatomic) NSString *livenCode;
 @property (strong ,nonatomic) NSNumber *gmode;
+
+/**
+ Step
+ */
 @property (strong ,nonatomic) NSNumber *step;
 @property (strong ,nonatomic) NSArray *location;
 @end
 
 
-// alarm model
-
 /**
- * 闹钟数据
  * alarm class
  */
 @interface DSBLEAlarmModel : NSObject
@@ -107,9 +178,30 @@ typedef NS_ENUM(NSInteger,BLELanguageType) {
  */
 @interface DSBLESedentary : NSObject
 
+/**
+ Sedentary time.
+ During this time,bracelet will calculate the steps,if not reach the min steps,bracelet will notify user.
+ 30=30 Min
+ 60=60 Min
+ 75=75 Min
+ 90=90 Min
+ */
 @property (assign,nonatomic) NSInteger sedentaryTime;
+
+/**
+ Yes for Sedentary reminder ON
+ No for Sedentary reminde OFF
+ */
 @property (assign,nonatomic) BOOL swtich;
+
+/**
+ Date time for bracelet start check the Sedentary
+ */
 @property (strong,nonatomic) NSDate *startTime;
+
+/**
+ Date time for bracelet stop check the Sedentary
+ */
 @property (strong,nonatomic) NSDate *endTime;
 
 @end
@@ -146,6 +238,11 @@ extern NSString * const kDSBLEAppNotifyWeibo;
  * ANCS Setting class
  */
 @interface DSBLEAppNotify : NSObject
+
+
+/**
+ Dictionary include All reminder setting 
+ */
 @property (strong,nonatomic) NSDictionary *appNotifyDict;
 
 - (BOOL)appNotifyDictValueWithKey:(NSString *)key;
@@ -198,12 +295,40 @@ extern NSString * const kDSBLEAppNotifyWeibo;
  * Sleep original data
  */
 @interface DSBLEOriginalSleepInfo : NSObject
+
+/**
+ Begin Time(String), UTC
+ */
 @property (strong, nonatomic) NSString *startTime;
+
+/**
+ End Time(String),UTC
+ */
 @property (strong, nonatomic) NSString *endTime;
+
+/**
+ Array for sleep state.
+ */
 @property (strong, nonatomic) NSArray *stateCode;
+
+/**
+ sleep state count
+ */
 @property (assign, nonatomic) NSInteger stateNum;
+
+/**
+ state interval,10 min.
+ */
 @property (assign, nonatomic) NSInteger stateCyc;
+
+/**
+ Begin Time, UTC
+ */
 @property (strong, nonatomic) NSDate *startDate;
+
+/**
+ End Time,UTC
+ */
 @property (strong, nonatomic) NSDate *endDate;
 
 #pragma Algorithm auxiliary params 算法辅助参数
@@ -217,10 +342,34 @@ extern NSString * const kDSBLEAppNotifyWeibo;
  * 睡眠原始数据块
  */
 @interface DSBLEOriginalSleepBlock : NSObject
+
+/**
+ Time for sleep state.
+ */
 @property (strong, nonatomic) NSDate *sDate;
+
+/**
+ Time for sleep state.String.
+ */
 @property (strong, nonatomic) NSString *sTime;
+
+/**
+ sleep state
+ */
 @property (strong, nonatomic) NSNumber *value;
+
+/**
+ block type
+ 0 = Begin
+ 1 = Sleep
+ 2 = Sleep indeep
+ 3 = End
+ */
 @property (strong, nonatomic) NSNumber *blockType;
+
+/**
+ sDate timeinterval from 2010.1.1
+ */
 @property (strong, nonatomic) NSNumber *timeInterval;
 @end
 

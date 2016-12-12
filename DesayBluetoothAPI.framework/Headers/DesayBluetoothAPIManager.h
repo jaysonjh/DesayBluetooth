@@ -62,33 +62,48 @@
 #define WMBLE_KEY(cmd,name) \
 [DesayBluetoothAPIManager getKey:cmd deviceName:name]
 
-
-
-
+/**
+ @brief DSBLEScanConnectHandler supports multi this delegate,whose adding and removing should appear in pairs.Once add delegate, it must be removed in the Handler before dealloc.
+ 
+ @discussion
+ * Add Delegate
+    1. [DSBLEAPIShareScanConnectHandler addTarget:(id) delegate delegateQueue:(dispatch_queue_t) queue]
+    2. [DSBLEAPIShareScanConnectHandler addTargetOnGlobalQueue:(id)delegate]
+ * Remove Delegate
+    * [DSBLEAPIShareScanConnectHandler removeTarget:(id)delegate]
+ */
 @protocol DSBLEAPIManagerScanConnectDelegate <NSObject>
 @optional
 
 /**
- * 监控蓝牙状态
- * Monitor bluetooth state
+ Monitor bluetooth state
+ @param state bluetooth state
  */
 - (void)DSBLEAPIManagerNotifyState:(CBCentralManagerState)state;
 
 /**
- * 扫描出设备后回调此API
- * invoke this API when devices is scanned
+ @brief Invoke this API when devices is scanned
+
+ @param device Device information inclued mac,name,rssi,state,advData
+ @see DSBLEBindingDevice
  */
 - (void)DSBLEAPIManagerDidDiscoverPeripheral:(nullable DSBLEBindingDevice *)device;
 
 /**
- * 连接设备成功可以通信后回调此API
- * invoke this API when connect to device and communicate with it successfully
+ @brief 连接设备成功可以通信后回调此API
+ invoke this API when connect to device and communicate with it successfully
+
+ @param peripheral Remote peripheral devices
+ @param error Connect peripheral issue
  */
 - (void)DSBLEAPIManagerDidConnectPeripheral:(nullable DSBLEPeripheral *)peripheral error:(nullable NSError *)error;
 
 /**
- * 设备断开回调此API
- * invoke this API when device did disconnect
+ @brief 设备断开回调此API
+ invoke this API when device did disconnect
+
+ @param peripheral Remote peripheral devices
+ @param error Disconnect peripheral issue
  */
 - (void)DSBLEAPIManagerDidDisconnectPeripheral:(nullable CBPeripheral *)peripheral error:(nullable NSError *)error;
  
@@ -106,23 +121,58 @@
  */
 @property (strong,nonatomic) NSDictionary *_Nullable scanOptions;
 
-+ (void)APIVersion;
-+ (nonnull DesayBluetoothAPIManager *)shareManager;
 
 /**
- * API have two Mode(Debug,Release). API Default in Release Mode.
- * In Release Mode,after sync data from bracelet,API will ask bracelet clean DATA.
- * In Debug Mode,after sync data from bracelet,API will not ask bracelet clean DATA.
- * Debug Mode for Developer to check sync data is current or not.
- *
- @param isDebug YES for Debug Mode/ No for Release
+ Print API Version in console.
+ */
++ (void)APIVersion;
+/**
+ @return YES--> debug,NO-->not debug.  if return YES ,the data from fitband will not removed after syn
+ */
+- (BOOL)APIMode;
+
+/**
+ @param isDebug YES--> debug,NO-->not debug.
  */
 - (void)setAPIMode:(BOOL)isDebug;
-- (BOOL)APIMode;
+/**
+ Get DesayBluetoothAPIManager instance.
+ @discussion DesayBluetoothAPIManager is singleton.
+ @return DesayBluetoothAPIManager
+ */
++ (nonnull DesayBluetoothAPIManager *)shareManager;
+
+
+/**
+ Get Bracelet information of BT-protocol
+
+ @param deviceName Bracelet Name
+ @return DSBLEBluetoothData
+ */
 - (nonnull DSBLEBluetoothData *)getDeviceInfo:(nonnull NSString *)deviceName;
+
+/**
+ Get Bracelet information of BT-protocol
+ @return DSBLEBluetoothData of connected Bracelet
+ */
 - (nullable DSBLEBluetoothData *)getCurrentDeviceInfo;
+
+/**
+ Get current BLEPeripheral
+ @return DSBLEPeripheral,The DSBLEPeripheral class represents remote peripheral devices.
+ */
 - (nullable DSBLEPeripheral *)currentDevice;
+
+/**
+ Get current BLEPeripheral information of Peripheral attributes.
+ @return DSBLEPeripheralModel,stored Peropheral's identifier,MAC address,name,Device Info,and state（DFU Mode/Normal Mode）.
+ */
 - (nullable DSBLEPeripheralModel *)currentDeviceModel;
+
+/**
+ Get current BLEPeripheral connected state.
+ @return YES connected, NO disConnected.
+ */
 - (BOOL )isCurrentChannelPeripheralConnected;
 
 /**

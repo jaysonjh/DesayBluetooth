@@ -8,11 +8,29 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ Bracelet information of BT-protocol
+ */
 @interface DSBLEBluetoothData : NSObject
 
+/**
+ Bracelet Name
+ */
 @property (strong,nonatomic) NSString *deviceName;
+
+/**
+ Bracelet Factory Class Name
+ */
 @property (strong,nonatomic) NSString *factoryClassName;
+
+/**
+ Bracelet BT-protocol type
+ */
 @property (strong,nonatomic) NSString *deviceClassName;
+
+/**
+ Bracelet Vendor Code
+ */
 @property (strong,nonatomic) NSString *manufactorCode;
 
 @end

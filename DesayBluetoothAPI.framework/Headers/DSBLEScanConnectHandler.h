@@ -28,6 +28,12 @@
  *  connect peripheral with mac address
  */
 - (void)connectionByDeviceByMac:(NSString *) mac;
+    
+/**
+ *  进行连接设备
+ *  connect peripheral with Identifier
+ */
+- (void)connectionByDeviceByIdentifier:(NSString *)uuid;
 
 /**
  * 是否已打开蓝牙
@@ -103,6 +109,11 @@
  */
 - (void)stopScan;
 
+/**
+ * 停止扫描
+ *  whether is scanning
+ * YES -->  scanning,    NO-->not scan.
+ */
 - (BOOL)isScanning;
 
 - (void)addTarget:(id)delegate delegateQueue:(dispatch_queue_t)delegateQueue;
@@ -110,6 +121,7 @@
 - (void)addTargetOnGlobalQueue:(id)delegate;
 
 - (void)removeTarget:(id)delegate;
+
 - (BOOL)haveTargetOfClass:(Class)aclass;
 
 @end
