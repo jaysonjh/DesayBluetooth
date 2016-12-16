@@ -56,11 +56,36 @@
 #define DSBLEAPIShareSyncHandler [[DesayBluetoothAPIManager shareManager] findSyncHandler]
 
 
+
+/**
+ calculate calorie
+
+ @param weight unit:kg
+ @param distance  unit:m
+ @return calorie unit:cal
+ */
+#define DSBLECalculatorCalorie(weight,distance) \
+(weight * 2.21 * 0.708) * distance
+
+
+/**
+ calculate distance
+
+ @param height unit:cm
+ @param step
+ @return distance unit:m
+ */
+#define DSBLECalculatorDistance(height,step) \
+(height / 100.f / 3.0f) * step
+
+
 #define WMBLE_CMD(cmd,name) \
 [DesayBluetoothAPIManager getCommand:cmd deviceName:name]
 
 #define WMBLE_KEY(cmd,name) \
 [DesayBluetoothAPIManager getKey:cmd deviceName:name]
+
+
 
 /**
  @brief DSBLEScanConnectHandler supports multi this delegate,whose adding and removing should appear in pairs.Once add delegate, it must be removed in the Handler before dealloc.
@@ -130,6 +155,11 @@
  @return YES--> debug,NO-->not debug.  if return YES ,the data from fitband will not removed after syn
  */
 - (BOOL)APIMode;
+
+
+//yes --> 将日志写入本地
++ (void)openRedirectNSlogToDocumentFolder:(BOOL)open;
+
 
 /**
  @param isDebug YES--> debug,NO-->not debug.
