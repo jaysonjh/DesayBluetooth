@@ -102,8 +102,10 @@ typedef NS_ENUM(NSInteger, DSBLEDataTransmitMode) {
 
 + (void)APIVersion;
 
-//yes --> 将日志写入本地
-+ (void)openRedirectNSlogToDocumentFolder:(BOOL)open;
+/*
+ Deprecated
+ */
++ (void)securityKey:(NSString *_Nonnull)securityKey;
 
 //蓝牙是否打开状态
 /**

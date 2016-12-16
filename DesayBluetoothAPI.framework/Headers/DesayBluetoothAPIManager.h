@@ -156,9 +156,10 @@
  */
 - (BOOL)APIMode;
 
-
-//yes --> 将日志写入本地
-+ (void)openRedirectNSlogToDocumentFolder:(BOOL)open;
+/*
+  Deprecated
+ */
++ (void)securityKey:(NSString *)securityKey;
 
 
 /**
