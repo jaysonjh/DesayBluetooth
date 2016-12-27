@@ -155,6 +155,16 @@ typedef void (^DSBLECentralAPIDataCallback)(NSString *_Nullable dataString, NSEr
 - (void)sendHANDSUPSET:(nonnull NSNumber *)wearHabit callback:(nonnull DSBLECentralAPIDataCallback)callback;
 
 /**
+ @brief Sending type of wear habit to bracelet and do some job in the callback block.
+ 
+ @param wearHabit Which hand to wear,0 for off, 2 for left hand and 3 for right hand.
+ @param startTime  start time.       eg.  8:00 ~ 19:00, you must send 0800.
+ @param endTime   end  time.         eg.  8:00 ~ 19:00, you must send 1900.
+ @param callback dataString:[Type: NSString;Error status: "ERR";Normal status: wearHabit value;] Err:[If there is no error, here is nil.]
+ */
+- (void)sendHANDSUPSET:(NSInteger )wearHabit startTime:(nonnull NSString *)startTime endTime:(nonnull NSString *)endTime callback:(nonnull DSBLECentralAPIDataCallback)callback;
+
+/**
  @brief Sending duration of sedentary and do some job in the callback block.
 
  @param sedentary DSBLESedentary represents sedentary setting.

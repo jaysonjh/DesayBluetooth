@@ -159,7 +159,7 @@
 /*
   Deprecated
  */
-+ (void)securityKey:(NSString *)securityKey;
++ (void)securityKey:(nonnull NSString *)securityKey;
 
 
 /**
