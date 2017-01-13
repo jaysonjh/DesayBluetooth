@@ -221,4 +221,8 @@ receiveCompleteDataCallBack:(void(^_Nullable)(CBPeripheral *_Nullable,CBCharacte
 //断开设备后清理指令队列数据
 - (void)clearWriteDataArray;
 
+- (void)turnOffCharacteristicByUUID:(CBUUID *_Nonnull)uuid;
+
+- (void)turnOnCharacteristicByUUID:(CBUUID *_Nonnull)uuid;
+
 @end
