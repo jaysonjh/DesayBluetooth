@@ -107,6 +107,12 @@ typedef NS_ENUM(NSInteger, DSBLEDataTransmitMode) {
  */
 + (void)securityKey:(NSString *_Nonnull)securityKey;
 
+/**
+ *   enable log
+ *   @param open             it is a bool , YES -> open ,NO -> close.
+ */
++(void)enableLog:(BOOL)open;
+
 //蓝牙是否打开状态
 /**
  *   bluetooth Open
