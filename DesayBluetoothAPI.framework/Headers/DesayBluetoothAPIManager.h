@@ -161,11 +161,17 @@
  */
 + (void)securityKey:(nonnull NSString *)securityKey;
 
+/**
+ * enable Log
+ @param open YES--> open log,NO-->close log.
+ */
++ (void)enableLog:(BOOL)open;
 
 /**
  @param isDebug YES--> debug,NO-->not debug.
  */
 - (void)setAPIMode:(BOOL)isDebug;
+
 /**
  Get DesayBluetoothAPIManager instance.
  @discussion DesayBluetoothAPIManager is singleton.
