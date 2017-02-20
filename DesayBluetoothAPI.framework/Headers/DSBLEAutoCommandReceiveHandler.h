@@ -74,6 +74,16 @@ typedef void (^DSBLECentralAPIReceiveDataCallback)(NSString * _Nullable dataStri
  */
 @property (nonatomic,copy)DSBLECentralAPIReceiveDataCallback  _Nullable receivePREMUSICDataCallback;
 
+
+/**
+ * only for Lenovo
+ * 获取 Lenovo手环操作通知： 1.	手环启动："NT+NOSLEEP:ON\r\n" 2.	手环关闭："NT+NOSLEEP:OFF\r\n"
+ 获取 Lenovo手环算法结果通知："NT+NOSLEEP:1\r\n"，参数为固定1位数，表示算法的结果，有效状态是：1,2,3表示低中高三档
+
+ */
+@property (nonatomic,copy)DSBLECentralAPIReceiveDataCallback  _Nullable receiveNOSleepCallback;
+
+
 /**
  * 转发数据
  * forward data

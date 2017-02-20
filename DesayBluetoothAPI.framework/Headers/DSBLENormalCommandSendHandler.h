@@ -386,4 +386,21 @@ typedef void (^DSBLECentralAPIDataCallback)(NSString *_Nullable dataString, NSEr
  */
 - (void)sendALARM2String:(nonnull NSString *)alarmString callback:(nonnull DSBLECentralAPIDataCallback)callback;
 
+
+/**
+ @brief for Lenovo, open no sleep .
+ @param totleTime   open no sleep totle time. eg: "030", it‘s mean I Open no sleep 30min .
+ */
+- (void)openNoSleep:(nonnull NSString *)totleTime callback:(nonnull DSBLECentralAPIDataCallback)callback;
+
+/**
+ @brief for Lenovo, close no sleep.
+ */
+- (void)closeNoSleepCallback:(nonnull DSBLECentralAPIDataCallback)callback;
+
+/**
+ @brief for Lenovo, query No Sleep Time
+ */
+- (void)queryNoSleepTimeCallback:(nonnull DSBLECentralAPIDataCallback)callback;
+
 @end
