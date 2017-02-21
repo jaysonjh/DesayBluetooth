@@ -33,7 +33,7 @@ extern NSString *const BLE_B521_NAME;
  *  Lenovo设备
  *  Lenovo device
  */
-extern NSString *const BLE_Lenovo_NAME;
+//extern NSString *const BLE_Lenovo_NAME;
 
 /**
  * Str \r\n
