@@ -22,6 +22,7 @@
 @class DSBLEHeartrate;
 @class DSBLEPeripheralModel;
 
+#define BLELenovoNAME @"WMBluetoothLenovo"
 
 #define DSBLEAPIManager [DesayBluetoothAPIManager shareManager]
 
