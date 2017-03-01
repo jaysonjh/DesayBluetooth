@@ -403,4 +403,30 @@ typedef void (^DSBLECentralAPIDataCallback)(NSString *_Nullable dataString, NSEr
  */
 - (void)queryNoSleepTimeCallback:(nonnull DSBLECentralAPIDataCallback)callback;
 
+/**
+ @brief for Lenovo, set Static Heart Rate
+ @param heartRate   eg: 075 表示设置静态心率提醒值：75；参数为固定3十进制数。
+ */
+- (void)setStaticHeartRate:(nonnull NSString *)heartRate callback:(nonnull DSBLECentralAPIDataCallback)callback;
+/**
+ @brief for Lenovo, query Static Heart Rate */
+- (void)queryStaticHeartRateCallback:(nonnull DSBLECentralAPIDataCallback)callback;
+/**
+ @brief for Lenovo, close Static Heart Rate
+ */
+- (void)closeStaticHeartRateCallback:(nonnull DSBLECentralAPIDataCallback)callback;
+
+/**
+ @brief for Lenovo, set dynamic Heart Rate
+ @param heartRate   eg: 075 表示设置动态心率提醒值：75；参数为固定3十进制数。
+ */
+- (void)setDynamicHeartRate:(nonnull NSString *)heartRate callback:(nonnull DSBLECentralAPIDataCallback)callback;
+/**
+ @brief for Lenovo, query dynamic Heart Rate */
+- (void)queryDynamicHeartRateCallback:(nonnull DSBLECentralAPIDataCallback)callback;
+/**
+ @brief for Lenovo, close dynamic Heart Rate
+ */
+- (void)closeDynamicHeartRateCallback:(nonnull DSBLECentralAPIDataCallback)callback;
+
 @end
