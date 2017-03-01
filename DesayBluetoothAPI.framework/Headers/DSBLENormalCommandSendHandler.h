@@ -411,10 +411,7 @@ typedef void (^DSBLECentralAPIDataCallback)(NSString *_Nullable dataString, NSEr
 /**
  @brief for Lenovo, query Static Heart Rate */
 - (void)queryStaticHeartRateCallback:(nonnull DSBLECentralAPIDataCallback)callback;
-/**
- @brief for Lenovo, close Static Heart Rate
- */
-- (void)closeStaticHeartRateCallback:(nonnull DSBLECentralAPIDataCallback)callback;
+
 
 /**
  @brief for Lenovo, set dynamic Heart Rate
@@ -424,9 +421,6 @@ typedef void (^DSBLECentralAPIDataCallback)(NSString *_Nullable dataString, NSEr
 /**
  @brief for Lenovo, query dynamic Heart Rate */
 - (void)queryDynamicHeartRateCallback:(nonnull DSBLECentralAPIDataCallback)callback;
-/**
- @brief for Lenovo, close dynamic Heart Rate
- */
-- (void)closeDynamicHeartRateCallback:(nonnull DSBLECentralAPIDataCallback)callback;
+
 
 @end
