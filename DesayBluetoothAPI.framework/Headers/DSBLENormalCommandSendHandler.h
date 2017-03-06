@@ -361,10 +361,10 @@ typedef void (^DSBLECentralAPIDataCallback)(NSString *_Nullable dataString, NSEr
 /**
  @brief Sending pace and do some job in the callback block.
 
- @param step If step = @(0),mean get step from bracelet. Step != 0,mean set step to bracelet.Range (0~99999)
+ @param step If step = nil,mean get step from bracelet. Step != nil,mean set step to bracelet.Range (0~99999)
  @param callback dataString:[Type: NSString;Error status: "ERR";Normal status: step from bracelet;] Err:[If there is no error, here is nil.]
  */
-- (void)sendPACE:(nonnull NSNumber *)step callback:(nonnull DSBLECentralAPIDataCallback)callback;
+- (void)sendPACE:(nullable NSNumber *)step callback:(nonnull DSBLECentralAPIDataCallback)callback;
 
 
 /**
