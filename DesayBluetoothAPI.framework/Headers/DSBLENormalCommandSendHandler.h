@@ -423,4 +423,8 @@ typedef void (^DSBLECentralAPIDataCallback)(NSString *_Nullable dataString, NSEr
 - (void)queryDynamicHeartRateCallback:(nonnull DSBLECentralAPIDataCallback)callback;
 
 
+/**
+ @brief for query GSENSOR */
+- (void)queryGSENSORCallback:(nonnull DSBLECentralAPIDataCallback)callback;
+
 @end
