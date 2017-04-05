@@ -35,7 +35,7 @@ typedef BOOL (^DSBLECentralManagerFilterOnDiscoverPeripheralsCallBack)(CBPeriphe
  *  @param peripheral Disconnect DSBLEPeripheral
  *  @param error      Disconnect error
  */
-typedef void (^DSBLECentralManagerDisconnectPeripheralCallback)(DSBLEPeripheral *_Nullable peripheral, NSError *_Nullable error);
+typedef void (^DSBLECentralManagerDisconnectPeripheralCallback)(CBPeripheral *_Nullable peripheral, NSError *_Nullable error);
 
 //检测蓝牙状态变化block
 /**
