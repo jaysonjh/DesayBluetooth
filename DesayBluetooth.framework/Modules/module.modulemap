@@ -1,0 +1,10 @@
+framework module DesayBluetoothAPI {
+  umbrella header "DesayBluetoothAPI.h"
+
+  export *
+  module * { export * }
+}
+
+module DesayBluetoothAPI.Swift {
+    header "DesayBluetoothAPI-Swift.h"
+}
