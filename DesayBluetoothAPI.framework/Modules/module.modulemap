@@ -4,3 +4,7 @@ framework module DesayBluetoothAPI {
   export *
   module * { export * }
 }
+
+module DesayBluetoothAPI.Swift {
+    header "DesayBluetoothAPI-Swift.h"
+}

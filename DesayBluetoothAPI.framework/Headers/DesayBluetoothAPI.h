@@ -2,31 +2,17 @@
 //  DesayBluetoothAPI.h
 //  DesayBluetoothAPI
 //
-//  Created by ran on 16/9/6.
-//  Copyright © 2016年 Desay. All rights reserved.
+//  Created by jayson jiang on 2017/3/14.
+//  Copyright © 2017年 Desay. All rights reserved.
 //
 
-#ifndef _DESAY_BLUETOOTH_H_
-#define _DESAY_BLUETOOTH_H_
-
 #import <UIKit/UIKit.h>
-#import <DesayBluetooth/DesayBluetooth.h>
-#import "DesayBluetoothAPIManager.h"
-#import "DSBLEAutoCommandReceiveHandler.h"
-#import "DSBLECommandMessage.h"
-#import "DSBLESyncHandler.h"
-#import "DSBLENormalCommandSendHandler.h"
-#import "DSBLESyncHandler.h"
-#import "DSBLEBindingHandler.h"
-#import "DSBLEAPIModel.h"
-#import "DSBLEPeripheralModel.h"
-#import "DSBLEBluetoothData.h"
-#import "DSBLEConfiguration.h"
-#import "DSBLEDeviceUtils.h"
-#import "DSBLEScanConnectHandler.h"
-#import "DSBLESleepAlgorithm.h"
 
-#endif
+//! Project version number for DesayBluetoothAPI.
+FOUNDATION_EXPORT double DesayBluetoothAPIVersionNumber;
 
+//! Project version string for DesayBluetoothAPI.
+FOUNDATION_EXPORT const unsigned char DesayBluetoothAPIVersionString[];
 
+// In this header, you should import all the public headers of your framework using statements like #import <DesayBluetoothAPI/PublicHeader.h>
 
