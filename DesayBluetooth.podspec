@@ -5,7 +5,7 @@ Pod::Spec.new do |s|
   s.license = "MIT"
   s.authors = {"Desay"=>"454040106@qq.com"}
   s.homepage = "http://59.33.252.108/Framework/dsble"
-  s.frameworks = "CoreBluetooth",'DesayBluetooth'
+  s.frameworks = "CoreBluetooth"
   s.libraries = "z"
 
   s.platform     = :ios
