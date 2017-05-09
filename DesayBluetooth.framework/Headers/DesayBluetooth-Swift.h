@@ -156,6 +156,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BLEAPIManage
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 - (void)setAPIModeWithIsDebug:(BOOL)isDebug;
 - (BOOL)apiMode SWIFT_WARN_UNUSED_RESULT;
+- (void)setSecurityWithCode:(NSString * _Nonnull)code;
 @end
 
 @protocol DSBLEBindDelegate;
@@ -807,6 +808,16 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEFuncType) {
 };
 
 
+/// Gsensor coordinate
+SWIFT_CLASS("_TtC14DesayBluetooth12DSBLEGsensor")
+@interface DSBLEGsensor : NSObject
+@property (nonatomic) NSInteger x;
+@property (nonatomic) NSInteger y;
+@property (nonatomic) NSInteger z;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
 /// 心率数据
 /// heart rate class
 SWIFT_CLASS("_TtC14DesayBluetooth14DSBLEHeartrate")
@@ -823,6 +834,11 @@ SWIFT_CLASS("_TtC14DesayBluetooth14DSBLEHeartrate")
 @property (nonatomic) NSUInteger ho;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
+
+typedef SWIFT_ENUM(NSUInteger, DSBLEHourSystemType) {
+  DSBLEHourSystemTypeHour12 = 0,
+  DSBLEHourSystemTypeHour24 = 1,
+};
 
 /// Bracelet Support Language
 /// <ul>
@@ -1197,6 +1213,32 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEUnitType) {
   DSBLEUnitTypeBS = 0,
   DSBLEUnitTypeMS = 1,
 };
+
+
+/// User information setting
+SWIFT_CLASS("_TtC14DesayBluetooth13DSBLEUserInfo")
+@interface DSBLEUserInfo : NSObject
+/// Height Range(100~250)cm
+@property (nonatomic) NSUInteger height;
+/// Weight Range(25~200)kg
+@property (nonatomic) NSUInteger weight;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+/// Version information
+SWIFT_CLASS("_TtC14DesayBluetooth12DSBLEVersion")
+@interface DSBLEVersion : NSObject
+/// User display
+@property (nonatomic, copy) NSString * _Nonnull display;
+/// Version,use it to judge upgrade firmware.
+@property (nonatomic) NSUInteger version;
+/// Vendor code
+@property (nonatomic, copy) NSString * _Nonnull vendor;
+/// Original data
+@property (nonatomic, copy) NSString * _Nonnull data;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
 
 enum DSBLEVibrationType : NSUInteger;
 
