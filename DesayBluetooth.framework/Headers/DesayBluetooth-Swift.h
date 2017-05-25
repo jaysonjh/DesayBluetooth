@@ -237,14 +237,6 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BLEManager *
 - (BLEPeripheral * _Nullable)peripheralBy:(NSString * _Nullable)identifier SWIFT_WARN_UNUSED_RESULT;
 @end
 
-
-@interface BLEManager (SWIFT_EXTENSION(DesayBluetooth))
-/// 扫描设备
-- (void)scanForPeripheralsWithServices:(NSArray<CBUUID *> * _Nullable)serviceUUIDs options:(NSDictionary<NSString *, id> * _Nullable)options;
-/// 停止扫描
-- (void)stopScan;
-@end
-
 @protocol BLEManagerDelegate;
 
 @interface BLEManager (SWIFT_EXTENSION(DesayBluetooth))
@@ -267,6 +259,14 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BLEManager *
 /// \param type 类型，默认无反馈
 ///
 - (void)peripheral:(BLEPeripheral * _Nonnull)peripheral writeValue:(NSData * _Nonnull)data for:(CBCharacteristic * _Nonnull)characteristic type:(CBCharacteristicWriteType)type;
+@end
+
+
+@interface BLEManager (SWIFT_EXTENSION(DesayBluetooth))
+/// 扫描设备
+- (void)scanForPeripheralsWithServices:(NSArray<CBUUID *> * _Nullable)serviceUUIDs options:(NSDictionary<NSString *, id> * _Nullable)options;
+/// 停止扫描
+- (void)stopScan;
 @end
 
 
@@ -641,6 +641,24 @@ SWIFT_CLASS("_TtC14DesayBluetooth11DSBLEDFUSet")
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
+/// Display Mode (Just DS-D6,DS-D8)
+/// <ul>
+///   <li>
+///     Portrait          Screen Display: Portrait
+///   </li>
+///   <li>
+///     LandscapeLeft     Screen Display: Landscape Left
+///   </li>
+///   <li>
+///     LandscapeRight    Screen Display: Landscape Right
+///   </li>
+/// </ul>
+typedef SWIFT_ENUM(NSUInteger, DSBLEDisplayType) {
+  DSBLEDisplayTypePortrait = 0,
+  DSBLEDisplayTypeLandscapeLeft = 1,
+  DSBLEDisplayTypeLandscapeRight = 2,
+};
+
 /// Send Func Type
 /// <ul>
 ///   <li>
@@ -763,6 +781,9 @@ SWIFT_CLASS("_TtC14DesayBluetooth11DSBLEDFUSet")
 ///   <li>
 ///     Func_Reset: Clean all data
 ///   </li>
+///   <li>
+///     Func_Display: Srceen Display
+///   </li>
 /// </ul>
 typedef SWIFT_ENUM(NSUInteger, DSBLEFuncType) {
   DSBLEFuncTypeAlarm = 0,
@@ -805,6 +826,7 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEFuncType) {
   DSBLEFuncTypeSportInfo = 37,
   DSBLEFuncTypeMotor = 38,
   DSBLEFuncTypeReset = 39,
+  DSBLEFuncTypeDisplay = 40,
 };
 
 
