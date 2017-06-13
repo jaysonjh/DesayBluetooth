@@ -44,14 +44,6 @@
 
 /* 同步后的数据
  * synchronized data
- * @pram sleepInfo sleep data
- * @pram sportInfo sport data
- * @pram rateInfo heart rate data
- */
-- (void)dataSyncFinishedWithSleepInfo:(nullable NSArray<DSBLESleepInfo *> *)sleepInfo sportInfo:(nullable NSArray<DSBLESportInfo *> *)sportInfo rateInfo:(nullable NSArray<DSBLEHeartrate *> *)rateInfo;
-
-/* 同步后的数据
- * synchronized data
  * @pram originalSleepblock original sleep state
  * @pram sportInfo sport data
  * @pram rateInfo heart rate data

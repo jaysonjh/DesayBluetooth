@@ -24,7 +24,6 @@
 #import "DSBLEConfiguration.h"
 #import "DSBLEDeviceUtils.h"
 #import "DSBLEScanConnectHandler.h"
-#import "DSBLESleepAlgorithm.h"
 #import "DSBLENewSleepAlgorithm.h"
 #endif
 
