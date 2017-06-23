@@ -237,6 +237,13 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BLEManager *
 - (void)stopScan;
 @end
 
+@protocol BLEManagerDelegate;
+
+@interface BLEManager (SWIFT_EXTENSION(DesayBluetooth))
+- (void)addDelegate:(id <BLEManagerDelegate> _Nonnull)delegate;
+- (void)removeDelegate:(id <BLEManagerDelegate> _Nonnull)delegate;
+@end
+
 @class CBCharacteristic;
 
 @interface BLEManager (SWIFT_EXTENSION(DesayBluetooth))
@@ -252,13 +259,6 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BLEManager *
 /// \param type 类型，默认无反馈
 ///
 - (void)peripheral:(BLEPeripheral * _Nonnull)peripheral writeValue:(NSData * _Nonnull)data for:(CBCharacteristic * _Nonnull)characteristic type:(CBCharacteristicWriteType)type;
-@end
-
-@protocol BLEManagerDelegate;
-
-@interface BLEManager (SWIFT_EXTENSION(DesayBluetooth))
-- (void)addDelegate:(id <BLEManagerDelegate> _Nonnull)delegate;
-- (void)removeDelegate:(id <BLEManagerDelegate> _Nonnull)delegate;
 @end
 
 
@@ -646,13 +646,16 @@ SWIFT_CLASS("_TtC14DesayBluetooth11DSBLEDFUSet")
 ///   </li>
 /// </ul>
 typedef SWIFT_ENUM(NSUInteger, DSBLEDisplayType) {
-  DSBLEDisplayTypePortrait = 0,
-  DSBLEDisplayTypeLandscapeLeft = 1,
-  DSBLEDisplayTypeLandscapeRight = 2,
+  DSBLEDisplayTypePortrait = 1,
+  DSBLEDisplayTypeLandscapeLeft = 2,
+  DSBLEDisplayTypeLandscapeRight = 3,
 };
 
 /// Send Func Type
 /// <ul>
+///   <li>
+///     Func_Common: Common
+///   </li>
 ///   <li>
 ///     Func_Alarm: Alarm
 ///   </li>
@@ -785,52 +788,71 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEDisplayType) {
 ///   <li>
 ///     Func_PAIHR: Set PAI static and dynamic HR
 ///   </li>
+///   <li>
+///     Func_Gender
+///   </li>
 /// </ul>
 typedef SWIFT_ENUM(NSUInteger, DSBLEFuncType) {
-  DSBLEFuncTypeAlarm = 0,
-  DSBLEFuncTypeTarget = 1,
-  DSBLEFuncTypeNotification = 2,
-  DSBLEFuncTypeVersion = 3,
-  DSBLEFuncTypeReboot = 4,
-  DSBLEFuncTypeBind = 5,
-  DSBLEFuncTypeUserInfo = 6,
-  DSBLEFuncTypeBattery = 7,
-  DSBLEFuncTypeAutoStep = 8,
-  DSBLEFuncTypeLanguage = 9,
-  DSBLEFuncTypeWristingTime = 10,
-  DSBLEFuncTypeSedentary = 11,
-  DSBLEFuncTypeFindBand = 12,
-  DSBLEFuncTypeActive = 13,
-  DSBLEFuncTypeTime = 14,
-  DSBLEFuncTypeTimezone = 15,
-  DSBLEFuncTypeDfu = 16,
-  DSBLEFuncTypeSaveStep = 17,
-  DSBLEFuncTypeTestHR = 18,
-  DSBLEFuncTypeSync = 19,
-  DSBLEFuncTypeSyncIcon = 20,
-  DSBLEFuncTypeCamera = 21,
-  DSBLEFuncTypeFindPhone = 22,
-  DSBLEFuncTypeMusicControl = 23,
-  DSBLEFuncTypeUnit = 24,
-  DSBLEFuncTypeAntiLost = 25,
-  DSBLEFuncTypeHrMonitor = 26,
-  DSBLEFuncTypeMusicStatu = 27,
-  DSBLEFuncTypeHourSystem = 28,
-  DSBLEFuncTypeSportMode = 29,
-  DSBLEFuncTypeSetPace = 30,
-  DSBLEFuncTypeNoSleep = 31,
-  DSBLEFuncTypeSetRHR = 32,
-  DSBLEFuncTypeSetDHR = 33,
-  DSBLEFuncTypeGsensor = 34,
-  DSBLEFuncTypeBloodPressure = 35,
-  DSBLEFuncTypeAncs = 36,
-  DSBLEFuncTypeSportInfo = 37,
-  DSBLEFuncTypeMotor = 38,
-  DSBLEFuncTypeReset = 39,
-  DSBLEFuncTypeDisplay = 40,
-  DSBLEFuncTypePai = 41,
-  DSBLEFuncTypePaiLimits = 42,
-  DSBLEFuncTypePaiHR = 43,
+  DSBLEFuncTypeCommon = 0,
+  DSBLEFuncTypeAlarm = 1,
+  DSBLEFuncTypeTarget = 2,
+  DSBLEFuncTypeNotification = 3,
+  DSBLEFuncTypeVersion = 4,
+  DSBLEFuncTypeReboot = 5,
+  DSBLEFuncTypeBind = 6,
+  DSBLEFuncTypeUserInfo = 7,
+  DSBLEFuncTypeBattery = 8,
+  DSBLEFuncTypeAutoStep = 9,
+  DSBLEFuncTypeLanguage = 10,
+  DSBLEFuncTypeWristingTime = 11,
+  DSBLEFuncTypeSedentary = 12,
+  DSBLEFuncTypeFindBand = 13,
+  DSBLEFuncTypeActive = 14,
+  DSBLEFuncTypeTime = 15,
+  DSBLEFuncTypeTimezone = 16,
+  DSBLEFuncTypeDfu = 17,
+  DSBLEFuncTypeSaveStep = 18,
+  DSBLEFuncTypeTestHR = 19,
+  DSBLEFuncTypeSync = 20,
+  DSBLEFuncTypeSyncIcon = 21,
+  DSBLEFuncTypeCamera = 22,
+  DSBLEFuncTypeFindPhone = 23,
+  DSBLEFuncTypeMusicControl = 24,
+  DSBLEFuncTypeUnit = 25,
+  DSBLEFuncTypeAntiLost = 26,
+  DSBLEFuncTypeHrMonitor = 27,
+  DSBLEFuncTypeMusicStatu = 28,
+  DSBLEFuncTypeHourSystem = 29,
+  DSBLEFuncTypeSportMode = 30,
+  DSBLEFuncTypeSetPace = 31,
+  DSBLEFuncTypeNoSleep = 32,
+  DSBLEFuncTypeSetRHR = 33,
+  DSBLEFuncTypeSetDHR = 34,
+  DSBLEFuncTypeGsensor = 35,
+  DSBLEFuncTypeBloodPressure = 36,
+  DSBLEFuncTypeAncs = 37,
+  DSBLEFuncTypeSportInfo = 38,
+  DSBLEFuncTypeMotor = 39,
+  DSBLEFuncTypeReset = 40,
+  DSBLEFuncTypeDisplay = 41,
+  DSBLEFuncTypePai = 42,
+  DSBLEFuncTypePaiLimits = 43,
+  DSBLEFuncTypePaiHR = 44,
+  DSBLEFuncTypeGender = 45,
+};
+
+/// Gender
+/// <ul>
+///   <li>
+///     male: Man
+///   </li>
+///   <li>
+///     female: Woman
+///   </li>
+/// </ul>
+typedef SWIFT_ENUM(NSUInteger, DSBLEGender) {
+  DSBLEGenderMale = 0,
+  DSBLEGenderFemale = 1,
 };
 
 
@@ -946,6 +968,8 @@ SWIFT_CLASS("_TtC14DesayBluetooth12DSBLEPAIInfo")
 @property (nonatomic) enum DSBLEPAIValueType type;
 /// pai
 @property (nonatomic) NSUInteger value;
+/// pai interval
+@property (nonatomic) NSUInteger interval;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -1283,6 +1307,8 @@ SWIFT_CLASS("_TtC14DesayBluetooth13DSBLESyncData")
 @property (nonatomic, copy) NSArray<DSBLEHeartrate *> * _Nonnull heartratesAndBloodOxygens;
 /// BloodPressure
 @property (nonatomic, copy) NSArray<DSBLEBloodPressure *> * _Nonnull bloodPressures;
+/// PAI
+@property (nonatomic, copy) NSArray<DSBLEPAIInfo *> * _Nonnull pais;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -1436,7 +1462,7 @@ SWIFT_CLASS("_TtC14DesayBluetooth18ScanConnectHandler")
 
 @interface ScanConnectHandler (SWIFT_EXTENSION(DesayBluetooth))
 - (void)scan;
-- (void)scanWithServices:(NSArray<CBUUID *> * _Nullable)serviceUUIDs options:(NSDictionary<NSString *, id> * _Nullable)options;
+- (void)scanWithServices:(NSArray<CBUUID *> * _Nullable)serviceUUIDs options:(NSDictionary<NSString *, id> * _Nullable)options filterNames:(NSArray<NSString *> * _Nullable)filterNames;
 - (void)stopScan;
 @end
 
