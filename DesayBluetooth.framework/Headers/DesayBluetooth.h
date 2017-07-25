@@ -19,6 +19,7 @@
 #endif
 
 #import "IntelHex2BinConverter.h"
+#import "HTBodyfat.h"
 
 FOUNDATION_EXPORT double DesayBluetoothVersionNumber;
 FOUNDATION_EXPORT const unsigned char DesayBluetoothVersionString[];

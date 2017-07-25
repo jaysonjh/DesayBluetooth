@@ -146,6 +146,7 @@ typedef SWIFT_ENUM(NSInteger, APIState) {
 
 @class Band;
 @class Scales;
+@protocol DSBLEScanConnectDelegate;
 
 SWIFT_CLASS("_TtC14DesayBluetooth13BLEAPIManager")
 @interface BLEAPIManager : NSObject
@@ -161,25 +162,12 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BLEAPIManage
 - (void)setLogOnWithCode:(NSString * _Nonnull)code;
 /// 外部需要的log反馈
 @property (nonatomic, copy) void (^ _Nullable logOut)(NSString * _Nonnull);
+@property (nonatomic, strong) id <DSBLEScanConnectDelegate> _Nullable delegate;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
 
 
 @interface BLEAPIManager (SWIFT_EXTENSION(DesayBluetooth))
-/// Pair by system bluetooth
-/// \param byName Devie Name
-///
-///
-/// returns:
-/// Pair or not Pair
-- (BOOL)isPairByName:(NSString * _Nonnull)byName SWIFT_WARN_UNUSED_RESULT;
-@end
-
-@protocol DSBLEScanConnectDelegate;
-
-@interface BLEAPIManager (SWIFT_EXTENSION(DesayBluetooth))
-- (void)addDelegate:(id <DSBLEScanConnectDelegate> _Nullable)delegate;
-- (void)removeDelegate:(id <DSBLEScanConnectDelegate> _Nullable)delegate;
 @end
 
 @class CBUUID;
@@ -187,6 +175,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BLEAPIManage
 @interface BLEAPIManager (SWIFT_EXTENSION(DesayBluetooth))
 - (void)scan;
 - (void)scanWithServices:(NSArray<CBUUID *> * _Nullable)serviceUUIDs options:(NSDictionary<NSString *, id> * _Nullable)options filterNames:(NSArray<NSString *> * _Nullable)filterNames;
+/// 停止扫描
 - (void)stopScan;
 @end
 
@@ -237,29 +226,31 @@ SWIFT_PROTOCOL("_TtP14DesayBluetooth18BLEManagerDelegate_")
 - (void)didUpdateState:(enum BLEManagerState)state;
 - (void)didDiscoverPeripheral:(BLEPeripheral * _Nonnull)peripheral;
 - (void)peripheral:(BLEPeripheral * _Nonnull)peripheral isReady:(BOOL)isReady error:(NSError * _Nullable)error;
+- (void)peripheral:(BLEPeripheral * _Nonnull)peripheral didUpdateValueFor:(CBCharacteristic * _Nonnull)characteristic error:(NSError * _Nullable)error;
 @end
 
-@class BLEScanDevice;
 
 @interface BLEAPIManager (SWIFT_EXTENSION(DesayBluetooth))
 /// Mac连接
-/// \param mac 连接
+/// \param mac mac len = 12
 ///
 - (void)connectWithMac:(NSString * _Nullable)mac;
 /// identifier 连接
 /// \param identifier identifier
 ///
 - (void)connectWithIdentifier:(NSString * _Nullable)identifier;
-/// 连接扫描设备
-/// \param scanDevice 扫描出来的设备
+/// 连接设备 （last）
+/// \param peripheral peripheral
 ///
-- (void)connectWithScanDevice:(BLEScanDevice * _Nonnull)scanDevice;
-/// 断开连接
-- (void)disconnectDevice:(BLEPeripheral * _Nullable)device;
+- (void)connectPeripheral:(BLEPeripheral * _Nonnull)peripheral;
 /// 通过identifier断开连接
 /// \param identifier identifier
 ///
-- (void)disconnectDeviceWithIdentifier:(NSString * _Nullable)identifier;
+- (void)disconnectWithIdentifier:(NSString * _Nullable)identifier;
+/// 断开连接 （last）
+/// \param peripheral peripheral
+///
+- (void)disconnectPeripheral:(BLEPeripheral * _Nullable)peripheral;
 @end
 
 @protocol DSBLEDFUDelegate;
@@ -270,6 +261,9 @@ SWIFT_PROTOCOL("_TtP14DesayBluetooth18BLEManagerDelegate_")
 @property (nonatomic, readonly) enum APIState apiState;
 /// DFU代理
 @property (nonatomic, strong) id <DSBLEDFUDelegate> _Nullable dfuDelegate;
+/// 请求DFU
+/// \param model DSBLEDFUSet
+///
 - (void)handleDFUWith:(DSBLEDFUSet * _Nonnull)model;
 @end
 
@@ -280,7 +274,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (NSString * _Nonnull)resultOK SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull resultERR;)
 + (NSString * _Nonnull)resultERR SWIFT_WARN_UNUSED_RESULT;
-/// MAC 地址长度
+/// MAC 地址长度 12
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly) NSInteger macLen;)
 + (NSInteger)macLen SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
@@ -297,8 +291,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BLEManager *
 @property (nonatomic, readonly, strong) CBCentralManager * _Nonnull centralManager;
 /// 状态
 @property (nonatomic, readonly) enum BLEManagerState state;
-/// 是否扫描
-@property (nonatomic, readonly) BOOL isScaning;
+@property (nonatomic, strong) id <BLEManagerDelegate> _Nullable delegate;
 /// 服务通道列表 /// 在调用连接前要配置好，不然无效
 @property (nonatomic, copy) NSArray<NSString *> * _Nullable discoverServices;
 /// 需要设置notify的特征值列表 /// 在调用连接前要配置好，不然无效
@@ -314,15 +307,9 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BLEManager *
 
 @interface BLEManager (SWIFT_EXTENSION(DesayBluetooth))
 /// 扫描设备
-- (void)scanForPeripheralsWithServices:(NSArray<CBUUID *> * _Nullable)serviceUUIDs options:(NSDictionary<NSString *, id> * _Nullable)options;
+- (void)scanWithServices:(NSArray<CBUUID *> * _Nullable)serviceUUIDs options:(NSDictionary<NSString *, id> * _Nullable)options;
 /// 停止扫描
 - (void)stopScan;
-@end
-
-
-@interface BLEManager (SWIFT_EXTENSION(DesayBluetooth))
-- (void)addDelegate:(id <BLEManagerDelegate> _Nonnull)delegate;
-- (void)removeDelegate:(id <BLEManagerDelegate> _Nonnull)delegate;
 @end
 
 
@@ -339,6 +326,12 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BLEManager *
 /// \param type 类型，默认无反馈
 ///
 - (void)peripheral:(BLEPeripheral * _Nonnull)peripheral writeValue:(NSData * _Nonnull)data for:(CBCharacteristic * _Nonnull)characteristic type:(CBCharacteristicWriteType)type;
+/// 写数据
+/// \param data 数据
+///
+/// \param characteristic 类型
+///
+- (void)peripheral:(BLEPeripheral * _Nonnull)peripheral writeValue:(NSData * _Nonnull)data for:(CBCharacteristic * _Nonnull)characteristic;
 @end
 
 
@@ -364,7 +357,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BLEManager *
 /// 断开设备连接
 /// \param peripheral 设备
 ///
-- (void)disConnect:(BLEPeripheral * _Nullable)peripheral;
+- (void)disconnect:(BLEPeripheral * _Nullable)peripheral;
 @end
 
 @class CBPeripheral;
@@ -379,6 +372,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BLEManager *
 @end
 
 @class CBService;
+@class CBDescriptor;
 
 @interface BLEManager (SWIFT_EXTENSION(DesayBluetooth))
 - (void)peripheral:(CBPeripheral * _Nonnull)peripheral didReadRSSI:(NSNumber * _Nonnull)RSSI error:(NSError * _Nullable)error;
@@ -387,6 +381,7 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BLEManager *
 - (void)peripheral:(CBPeripheral * _Nonnull)peripheral didUpdateValueForCharacteristic:(CBCharacteristic * _Nonnull)characteristic error:(NSError * _Nullable)error;
 - (void)peripheral:(CBPeripheral * _Nonnull)peripheral didWriteValueForCharacteristic:(CBCharacteristic * _Nonnull)characteristic error:(NSError * _Nullable)error;
 - (void)peripheral:(CBPeripheral * _Nonnull)peripheral didUpdateNotificationStateForCharacteristic:(CBCharacteristic * _Nonnull)characteristic error:(NSError * _Nullable)error;
+- (void)peripheral:(CBPeripheral * _Nonnull)peripheral didWriteValueForDescriptor:(CBDescriptor * _Nonnull)descriptor error:(NSError * _Nullable)error;
 @end
 
 
@@ -404,20 +399,8 @@ SWIFT_CLASS("_TtC14DesayBluetooth13BLEPeripheral")
 @property (nonatomic, readonly, copy) NSString * _Nonnull identifier;
 @property (nonatomic, readonly, copy) NSArray<CBService *> * _Nonnull services;
 @property (nonatomic, readonly, copy) NSArray<CBCharacteristic *> * _Nonnull characteristics;
-@property (nonatomic, readonly, strong) NSNumber * _Nonnull rssi;
-@property (nonatomic, readonly, copy) NSDictionary<NSString *, id> * _Nonnull advertisementData;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-@end
-
-
-SWIFT_CLASS("_TtC14DesayBluetooth13BLEScanDevice")
-@interface BLEScanDevice : NSObject
-/// MAC
-@property (nonatomic, readonly, copy) NSString * _Nonnull mac;
-/// OTA? 0 正常 1 OTA
-@property (nonatomic, readonly) BOOL state;
-/// 设备
-@property (nonatomic, readonly, strong) BLEPeripheral * _Nonnull dsPeripheral;
+@property (nonatomic, readonly, strong) NSNumber * _Nullable rssi;
+@property (nonatomic, readonly, copy) NSDictionary<NSString *, id> * _Nullable advertisementData;
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
 
@@ -459,24 +442,26 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BLESleepAlgo
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
 
+enum DSBLEDeviceType : NSUInteger;
 enum DSBLEProtocolType : NSUInteger;
+enum DSBLEFuncType : NSUInteger;
 
 SWIFT_CLASS("_TtC14DesayBluetooth7BLEUtil")
 @interface BLEUtil : NSObject
-/// 通过广播信息获取Mac
-/// \param advertisementData 蓝牙广播
+/// 根据设备名获取设备大类型
+/// \param name 设备名
 ///
 ///
 /// returns:
-/// mac
-+ (NSString * _Nullable)macBy:(NSDictionary<NSString *, id> * _Nonnull)advertisementData SWIFT_WARN_UNUSED_RESULT;
-/// 根据设备名获取设备类型
-/// \param devName 设备名
+/// 总类型
++ (enum DSBLEDeviceType)deviceTypeBy:(NSString * _Nonnull)name SWIFT_WARN_UNUSED_RESULT;
+/// 根据设备名获取设备协议类型
+/// \param name 设备名
 ///
 ///
 /// returns:
-/// 设备类型
-+ (enum DSBLEProtocolType)protocolTypeBy:(NSString * _Nonnull)devName SWIFT_WARN_UNUSED_RESULT;
+/// 设备协议类型
++ (enum DSBLEProtocolType)protocolTypeBy:(NSString * _Nonnull)name SWIFT_WARN_UNUSED_RESULT;
 /// 根据厂商代码获取设备名字
 /// \param manuCode 厂商代码
 ///
@@ -491,20 +476,37 @@ SWIFT_CLASS("_TtC14DesayBluetooth7BLEUtil")
 /// returns:
 /// 厂商代码
 + (NSString * _Nonnull)manuCodeBy:(NSString * _Nonnull)name SWIFT_WARN_UNUSED_RESULT;
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
-enum DSBLEFuncType : NSUInteger;
-
-SWIFT_CLASS("_TtC14DesayBluetooth6Device")
-@interface Device : NSObject
-/// 是否包含该功能
+/// 通过设备名字判断是否包含该功能
+/// \param name 设备名字
+///
 /// \param funcType 功能
 ///
 ///
 /// returns:
 /// 是否包含该功能
-- (BOOL)containsWithFuncType:(enum DSBLEFuncType)funcType SWIFT_WARN_UNUSED_RESULT;
++ (BOOL)deviceWithName:(NSString * _Nonnull)name contains:(enum DSBLEFuncType)funcType SWIFT_WARN_UNUSED_RESULT;
+/// 是否配对
+/// \param name 设备名字
+///
+///
+/// returns:
+/// 是否配对
++ (BOOL)isPairByName:(NSString * _Nonnull)name SWIFT_WARN_UNUSED_RESULT;
+/// 是否配对
+/// \param identifier identifier
+///
+///
+/// returns:
+/// 是否配对
++ (BOOL)isPairByIdentifier:(NSString * _Nonnull)identifier SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+SWIFT_CLASS("_TtC14DesayBluetooth6Device")
+@interface Device : NSObject
+/// 是否就绪
+@property (nonatomic, readonly) BOOL isReady;
 /// 调用方法
 /// \param funcType 功能
 ///
@@ -517,24 +519,18 @@ SWIFT_CLASS("_TtC14DesayBluetooth6Device")
 @end
 
 enum DSBLEAutoType : NSUInteger;
+@protocol DSBLEBindDelegate;
+@protocol DSBLESyncDelegate;
 
 SWIFT_CLASS("_TtC14DesayBluetooth4Band")
 @interface Band : Device
 /// 通知代理
 @property (nonatomic, copy) void (^ _Nullable notify)(enum DSBLEAutoType, id _Nullable, NSError * _Nullable);
-- (void)makeWithFuncType:(enum DSBLEFuncType)funcType data:(id _Nullable)data callback:(void (^ _Nullable)(id _Nullable, BOOL, NSError * _Nullable))callback;
-@end
-
-@protocol DSBLEBindDelegate;
-@protocol DSBLESyncDelegate;
-
-@interface Band (SWIFT_EXTENSION(DesayBluetooth))
-/// 是否就绪
-@property (nonatomic, readonly) BOOL isReady;
 /// 绑定代理
 @property (nonatomic, strong) id <DSBLEBindDelegate> _Nullable bindDelegate;
 /// 同步代理
 @property (nonatomic, strong) id <DSBLESyncDelegate> _Nullable syncDelegate;
+- (void)makeWithFuncType:(enum DSBLEFuncType)funcType data:(id _Nullable)data callback:(void (^ _Nullable)(id _Nullable, BOOL, NSError * _Nullable))callback;
 @end
 
 
@@ -734,6 +730,30 @@ SWIFT_CLASS("_TtC14DesayBluetooth11DSBLEDFUSet")
 @property (nonatomic, copy) NSString * _Nonnull filePath;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
+
+@class DSBLEScalesData;
+
+SWIFT_CLASS("_TtC14DesayBluetooth11DSBLEDevice")
+@interface DSBLEDevice : BLEPeripheral
+/// type
+@property (nonatomic, readonly) enum DSBLEDeviceType type;
+/// MAC len = 12
+@property (nonatomic, readonly, copy) NSString * _Nullable mac;
+/// OTA? true false
+@property (nonatomic, readonly) BOOL state;
+/// 2组 称数据
+@property (nonatomic, readonly, copy) NSArray<DSBLEScalesData *> * _Nullable scalesDatas;
+/// power (50 = 50%)
+@property (nonatomic, readonly) NSInteger power;
+@end
+
+typedef SWIFT_ENUM(NSUInteger, DSBLEDeviceType) {
+  DSBLEDeviceTypeBand = 0,
+  DSBLEDeviceTypeScales = 1,
+  DSBLEDeviceTypeShoes = 2,
+  DSBLEDeviceTypeWatch = 3,
+  DSBLEDeviceTypeOther = 4,
+};
 
 /// Display Mode (Just DS-D6,DS-D8)
 /// <ul>
@@ -946,6 +966,8 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEFuncType) {
   DSBLEFuncTypePaiHR = 45,
   DSBLEFuncTypeGender = 46,
   DSBLEFuncTypePaiTotal = 47,
+  DSBLEFuncTypeClearData = 48,
+  DSBLEFuncTypeSn = 49,
 };
 
 /// Gender
@@ -1144,12 +1166,35 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEProtocolType) {
   DSBLEProtocolTypeOther = 0,
   DSBLEProtocolTypeBandStandardB103 = 1,
   DSBLEProtocolTypeBandStandardB521 = 2,
-  DSBLEProtocolTypeBandLenove = 3,
-  DSBLEProtocolTypeBandMeizu = 4,
-  DSBLEProtocolTypeBandD8 = 5,
-  DSBLEProtocolTypeBandD6 = 6,
-  DSBLEProtocolTypeBandD6A = 7,
-  DSBLEProtocolTypeScalesHS10 = 8,
+  DSBLEProtocolTypeBandMeizu = 3,
+  DSBLEProtocolTypeBandD8 = 4,
+  DSBLEProtocolTypeBandD6 = 5,
+  DSBLEProtocolTypeBandD6A = 6,
+  DSBLEProtocolTypeScalesHS10 = 7,
+};
+
+enum DSBLEScalesType : NSUInteger;
+
+/// Scales sync data
+SWIFT_CLASS("_TtC14DesayBluetooth15DSBLEScalesData")
+@interface DSBLEScalesData : NSObject
+/// time
+@property (nonatomic, copy) NSDate * _Null_unspecified time;
+/// type
+@property (nonatomic) enum DSBLEScalesType type;
+/// weight (g)
+@property (nonatomic) float weight;
+/// impedance
+@property (nonatomic) NSUInteger impedance;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+typedef SWIFT_ENUM(NSUInteger, DSBLEScalesType) {
+  DSBLEScalesTypeNone = 0,
+  DSBLEScalesTypeFat = 1,
+  DSBLEScalesTypeBody = 2,
+  DSBLEScalesTypeBaby = 3,
+  DSBLEScalesTypeKitchen = 4,
 };
 
 
@@ -1158,27 +1203,25 @@ SWIFT_PROTOCOL("_TtP14DesayBluetooth24DSBLEScanConnectDelegate_")
 @protocol DSBLEScanConnectDelegate
 @optional
 /// 蓝牙状态改变反馈
-/// \param state 状态
+/// \param state state
 ///
 - (void)notifyState:(enum BLEManagerState)state;
 /// 扫描发现设备
-/// \param device 设备
+/// \param device device
 ///
-- (void)didDiscoverDevice:(BLEScanDevice * _Nonnull)device;
+- (void)didDiscoverDevice:(DSBLEDevice * _Nonnull)device;
 /// 准备连接DFU设备
-/// \param device DFU设备
+/// \param device device
 ///
-- (void)connectDFUDevice:(BLEScanDevice * _Nonnull)device;
+- (void)connectDFUDevice:(DSBLEDevice * _Nonnull)device;
 /// 连接设备
-/// \param device 设备
+/// \param device device
 ///
-- (void)didConnectDevice:(BLEPeripheral * _Nonnull)device;
+- (void)didConnectDevice:(DSBLEDevice * _Nonnull)device;
 /// 断开设备
-/// \param device 设备
+/// \param device device
 ///
-/// \param error 错误
-///
-- (void)didDisconnectDevice:(BLEPeripheral * _Nonnull)device :(NSError * _Nullable)error;
+- (void)didDisconnectDevice:(DSBLEDevice * _Nonnull)device;
 @end
 
 
@@ -1526,9 +1569,9 @@ SWIFT_CLASS("_TtC14DesayBluetooth17DSBLEWristingTime")
 /// Wristing Time extend setting Model (Not include: B521 B103 B502)
 /// Add startTime and endTime.
 /// start time.
-@property (nonatomic, copy) NSDate * _Nonnull startTime;
+@property (nonatomic, copy) NSDate * _Nullable startTime;
 /// end  time.
-@property (nonatomic, copy) NSDate * _Nonnull endTime;
+@property (nonatomic, copy) NSDate * _Nullable endTime;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -1555,11 +1598,6 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEWristingType) {
   DSBLEWristingTypeRight = 3,
 };
 
-
-
-@interface Device (SWIFT_EXTENSION(DesayBluetooth)) <BLEManagerDelegate>
-- (void)peripheral:(BLEPeripheral * _Nonnull)peripheral didUpdateValueFor:(CBCharacteristic * _Nonnull)characteristic error:(NSError * _Nullable)error;
-@end
 
 
 @interface Device (SWIFT_EXTENSION(DesayBluetooth))
