@@ -1453,9 +1453,9 @@ SWIFT_CLASS("_TtC14DesayBluetooth13DSBLEStepInfo")
 ///   </li>
 /// </ul>
 typedef SWIFT_ENUM(NSUInteger, DSBLEStepType) {
-  DSBLEStepTypeOther = 0,
-  DSBLEStepTypeWalk = 1,
-  DSBLEStepTypeRun = 2,
+  DSBLEStepTypeOther = 1,
+  DSBLEStepTypeWalk = 2,
+  DSBLEStepTypeRun = 3,
 };
 
 
