@@ -442,6 +442,13 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BLESleepAlgo
 - (nonnull instancetype)init SWIFT_UNAVAILABLE;
 @end
 
+
+SWIFT_CLASS("_TtC14DesayBluetooth19BLESleepAlgorithmF8")
+@interface BLESleepAlgorithmF8 : NSObject
+- (DSBLESleepInfo * _Nullable)analyzeSleepRawData:(NSArray<DSBLESleepBlock *> * _Nonnull)rawData SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
 enum DSBLEDeviceType : NSUInteger;
 enum DSBLEProtocolType : NSUInteger;
 enum DSBLEFuncType : NSUInteger;
@@ -507,6 +514,8 @@ SWIFT_CLASS("_TtC14DesayBluetooth6Device")
 @interface Device : NSObject
 /// 是否就绪
 @property (nonatomic, readonly) BOOL isReady;
+/// 断开设备
+- (void)disconnect;
 /// 调用方法
 /// \param funcType 功能
 ///
@@ -653,6 +662,7 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEAutoType) {
   DSBLEAutoTypeCamera = 9,
   DSBLEAutoTypeCalorie = 10,
   DSBLEAutoTypePai = 11,
+  DSBLEAutoTypeSos = 12,
 };
 
 enum DSBLEBindingState : NSUInteger;
@@ -742,7 +752,7 @@ SWIFT_CLASS("_TtC14DesayBluetooth11DSBLEDevice")
 /// OTA? true false
 @property (nonatomic, readonly) BOOL state;
 /// 2组 称数据
-@property (nonatomic, readonly, copy) NSArray<DSBLEScalesData *> * _Nullable scalesDatas;
+@property (nonatomic, readonly, strong) DSBLEScalesData * _Nullable scalesData;
 /// power (50 = 50%)
 @property (nonatomic, readonly) NSInteger power;
 @end
@@ -968,6 +978,7 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEFuncType) {
   DSBLEFuncTypePaiTotal = 47,
   DSBLEFuncTypeClearData = 48,
   DSBLEFuncTypeSn = 49,
+  DSBLEFuncTypeTestBP = 50,
 };
 
 /// Gender
