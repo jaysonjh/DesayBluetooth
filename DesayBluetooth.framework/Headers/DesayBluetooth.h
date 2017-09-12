@@ -2,24 +2,16 @@
 //  DesayBluetooth.h
 //  DesayBluetooth
 //
-//  Created by zjw7sky on 2017/4/27.
-//  Copyright © 2017年 Desay. All rights reserved.
+//  Created by Desay on 16/6/29.
+//  Copyright © 2016年 ran. All rights reserved.
 //
 
-#ifdef __OBJC__
-#import <UIKit/UIKit.h>
-#else
-#ifndef FOUNDATION_EXPORT
-#if defined(__cplusplus)
-#define FOUNDATION_EXPORT extern "C"
-#else
-#define FOUNDATION_EXPORT extern
+#ifndef _DESAY_BLUETOOTH_H_
+#define _DESAY_BLUETOOTH_H_
+#import <CoreBluetooth/CoreBluetooth.h>
+#import "DSBLECentralManager.h"
+#import "DSBLEPeripheral.h"
+#import "DSBLEBaseProtocol.h"
+#import "DSBLESyncRequestDataModel.h"
+#import "DSBLEUtils.h"
 #endif
-#endif
-#endif
-
-#import "IntelHex2BinConverter.h"
-#import "HTBodyfat.h"
-
-FOUNDATION_EXPORT double DesayBluetoothVersionNumber;
-FOUNDATION_EXPORT const unsigned char DesayBluetoothVersionString[];
