@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name = "DesayBluetooth"
-s.version = "1.1.53"
+s.version = "2.1.3"
 s.summary = "DesayBluetooth is a Bluetooth library"
 s.license = "MIT"
 s.authors = {"Desay"=>"454040106@qq.com"}
@@ -14,4 +14,6 @@ s.requires_arc = true
 s.source       = { :git => "ssh://git@59.33.252.108:122/Framework/dsble.git", :tag => s.version.to_s }
 
 s.vendored_framework   = '*.framework'
+s.dependency 'Zip', '~> 0.7.0'
+
 end
