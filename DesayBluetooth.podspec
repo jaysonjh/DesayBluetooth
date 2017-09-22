@@ -14,6 +14,6 @@ s.requires_arc = true
 s.source       = { :git => "ssh://git@59.33.252.108:122/Framework/dsble.git", :tag => s.version.to_s }
 
 s.vendored_framework   = '*.framework'
-s.dependency 'Zip', '~> 1.0.0'
+s.dependency 'Zip', '~> 0.7.0'
 
 end
