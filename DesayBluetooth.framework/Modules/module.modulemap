@@ -7,4 +7,5 @@ framework module DesayBluetooth {
 
 module DesayBluetooth.Swift {
     header "DesayBluetooth-Swift.h"
+    requires objc
 }
