@@ -618,6 +618,31 @@ SWIFT_CLASS("_TtC14DesayBluetooth10DSBLEAlarm")
 @end
 
 
+/// Alert Distance Setting
+SWIFT_CLASS("_TtC14DesayBluetooth18DSBLEAlertDistance")
+@interface DSBLEAlertDistance : NSObject
+/// near range
+@property (nonatomic) NSUInteger nearRange;
+/// far range
+@property (nonatomic) NSUInteger farRange;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+/// Alert distance type
+/// <ul>
+///   <li>
+///     near: Near mode
+///   </li>
+///   <li>
+///     far: Far mode
+///   </li>
+/// </ul>
+typedef SWIFT_ENUM(NSUInteger, DSBLEAlertType) {
+  DSBLEAlertTypeNear = 0,
+  DSBLEAlertTypeFar = 1,
+};
+
+
 /// ANCS提示设置类
 /// ANCS Setting class
 SWIFT_CLASS("_TtC14DesayBluetooth14DSBLEAppNotify")
@@ -979,6 +1004,12 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEDisplayType) {
 ///   <li>
 ///     Func_Pregnant: Pregnant Mode for Scales
 ///   </li>
+///   <li>
+///     Func_AntiStatus: Bond to auti-lost status
+///   </li>
+///   <li>
+///     Func_AlertDistance: Distance Alert for Band
+///   </li>
 /// </ul>
 typedef SWIFT_ENUM(NSUInteger, DSBLEFuncType) {
   DSBLEFuncTypeNone = 0,
@@ -1035,6 +1066,9 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEFuncType) {
   DSBLEFuncTypeConnect = 51,
   DSBLEFuncTypeWUnit = 52,
   DSBLEFuncTypePregnant = 53,
+  DSBLEFuncTypeAntiStatus = 54,
+  DSBLEFuncTypeAlertDistance = 55,
+  DSBLEFuncTypeAlertType = 56,
 };
 
 /// Gender
