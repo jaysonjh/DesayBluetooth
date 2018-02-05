@@ -4,3 +4,8 @@ framework module DesayBluetooth {
   export *
   module * { export * }
 }
+
+module DesayBluetooth.Swift {
+    header "DesayBluetooth-Swift.h"
+    requires objc
+}
