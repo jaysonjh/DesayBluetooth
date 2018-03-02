@@ -879,6 +879,7 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEBandFuncType) {
   DSBLEBandFuncTypeCalorie = 61,
   DSBLEBandFuncTypeDistance = 62,
   DSBLEBandFuncTypeDrink = 63,
+  DSBLEBandFuncTypeDial = 64,
 };
 
 enum DSBLEBindingState : NSUInteger;
@@ -1223,6 +1224,7 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEFuncType) {
   DSBLEFuncTypeCalorie = 63,
   DSBLEFuncTypeDistance = 64,
   DSBLEFuncTypeDrink = 65,
+  DSBLEFuncTypeDial = 66,
 };
 
 enum DSBLESportType : NSUInteger;
@@ -1475,9 +1477,10 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEProtocolType) {
   DSBLEProtocolTypeBandD6A = 6,
   DSBLEProtocolTypeBandHW = 7,
   DSBLEProtocolTypeBandHWPlus = 8,
-  DSBLEProtocolTypeScalesHS10 = 9,
-  DSBLEProtocolTypeShoeDS = 10,
-  DSBLEProtocolTypeBand2 = 11,
+  DSBLEProtocolTypeBandHL = 9,
+  DSBLEProtocolTypeScalesHS10 = 10,
+  DSBLEProtocolTypeShoeDS = 11,
+  DSBLEProtocolTypeBand2 = 12,
 };
 
 
