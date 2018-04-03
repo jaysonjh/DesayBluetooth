@@ -20,6 +20,7 @@
 
 #import "IntelHex2BinConverter.h"
 #import "HTBodyfat_SDK.h"
+#import "ChipseaScaleSDK.h"
 
 FOUNDATION_EXPORT double DesayBluetoothVersionNumber;
 FOUNDATION_EXPORT const unsigned char DesayBluetoothVersionString[];
