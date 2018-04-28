@@ -598,6 +598,24 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _No
 + (NSString * _Nonnull)kDSBLEAppNotifySkype SWIFT_WARN_UNUSED_RESULT;
 SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull kDSBLEAppNotifyWeibo;)
 + (NSString * _Nonnull)kDSBLEAppNotifyWeibo SWIFT_WARN_UNUSED_RESULT;
+/// Add for WW Customer
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull kDSBLEAPPNotifyHike;)
++ (NSString * _Nonnull)kDSBLEAPPNotifyHike SWIFT_WARN_UNUSED_RESULT;
+/// Add for WW Customer
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull kDSBLEAPPNotifyFBMessenger;)
++ (NSString * _Nonnull)kDSBLEAPPNotifyFBMessenger SWIFT_WARN_UNUSED_RESULT;
+/// Add for WW Customer
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull kDSBLEAPPNotifyGmail;)
++ (NSString * _Nonnull)kDSBLEAPPNotifyGmail SWIFT_WARN_UNUSED_RESULT;
+/// Add for WW Customer
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull kDSBLEAPPNotifyGoogleHangout;)
++ (NSString * _Nonnull)kDSBLEAPPNotifyGoogleHangout SWIFT_WARN_UNUSED_RESULT;
+/// Add for WW Customer
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull kDSBLEAPPNotifySnapchat;)
++ (NSString * _Nonnull)kDSBLEAPPNotifySnapchat SWIFT_WARN_UNUSED_RESULT;
+/// Add for WW Customer
+SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull kDSBLEAPPNotifyGoogleCalendar;)
++ (NSString * _Nonnull)kDSBLEAPPNotifyGoogleCalendar SWIFT_WARN_UNUSED_RESULT;
 /// create new App Notify
 /// \param dict Dictionary include All reminder setting
 ///
@@ -873,14 +891,10 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEBandFuncType) {
   DSBLEBandFuncTypeAlertType = 54,
   DSBLEBandFuncTypeRestMode = 55,
   DSBLEBandFuncTypeWeather = 56,
-  DSBLEBandFuncTypePace = 57,
-  DSBLEBandFuncTypeSetTime = 58,
-  DSBLEBandFuncTypeSetUserInfo = 59,
-  DSBLEBandFuncTypeSetTimezone = 60,
-  DSBLEBandFuncTypeCalorie = 61,
-  DSBLEBandFuncTypeDistance = 62,
-  DSBLEBandFuncTypeDrink = 63,
-  DSBLEBandFuncTypeDial = 64,
+  DSBLEBandFuncTypeCalorie = 57,
+  DSBLEBandFuncTypeDistance = 58,
+  DSBLEBandFuncTypeDrink = 59,
+  DSBLEBandFuncTypeDial = 60,
 };
 
 enum DSBLEBindingState : NSUInteger;
@@ -1218,14 +1232,11 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEFuncType) {
   DSBLEFuncTypeAlertType = 56,
   DSBLEFuncTypeRestMode = 57,
   DSBLEFuncTypeWeather = 58,
-  DSBLEFuncTypePace = 59,
-  DSBLEFuncTypeSetTime = 60,
-  DSBLEFuncTypeSetUserInfo = 61,
-  DSBLEFuncTypeSetTimezone = 62,
-  DSBLEFuncTypeCalorie = 63,
-  DSBLEFuncTypeDistance = 64,
-  DSBLEFuncTypeDrink = 65,
-  DSBLEFuncTypeDial = 66,
+  DSBLEFuncTypeCalorie = 59,
+  DSBLEFuncTypeDistance = 60,
+  DSBLEFuncTypeDrink = 61,
+  DSBLEFuncTypeDial = 62,
+  DSBLEFuncTypeAge = 63,
 };
 
 enum DSBLESportType : NSUInteger;
@@ -1562,6 +1573,21 @@ SWIFT_PROTOCOL("_TtP14DesayBluetooth24DSBLEScanConnectDelegate_")
 /// \param state state
 ///
 - (void)notifyState:(enum BLEManagerState)state;
+/// Retsore state Dict
+/// <ul>
+///   <li>
+///     @seealso            CBCentralManagerRestoredStatePeripheralsKey;
+///   </li>
+///   <li>
+///     @seealso            CBCentralManagerRestoredStateScanServicesKey;
+///   </li>
+///   <li>
+///     @seealso            CBCentralManagerRestoredStateScanOptionsKey;
+///   </li>
+/// </ul>
+/// \param dict 
+///
+- (void)restoreStateDict:(NSDictionary<NSString *, id> * _Nonnull)dict;
 /// 扫描发现设备
 /// \param device device
 ///
