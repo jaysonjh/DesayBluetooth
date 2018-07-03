@@ -1492,6 +1492,7 @@ SWIFT_PROTOCOL("_TtP14DesayBluetooth16DSBLEDFUDelegate_")
 - (void)DFUError:(NSString * _Nonnull)error;
 @end
 
+enum DSBLEOTAFileType : uint8_t;
 
 /// Set DFU
 SWIFT_CLASS("_TtC14DesayBluetooth11DSBLEDFUSet")
@@ -1502,6 +1503,8 @@ SWIFT_CLASS("_TtC14DesayBluetooth11DSBLEDFUSet")
 @property (nonatomic, copy) NSString * _Nonnull deviceMac;
 /// file path
 @property (nonatomic, copy) NSString * _Nonnull filePath;
+/// file type, Only for BLE Protocol 2.X Devices
+@property (nonatomic) enum DSBLEOTAFileType fileType;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -1597,7 +1600,7 @@ SWIFT_CLASS("_TtC14DesayBluetooth14DSBLEHRMonitor")
 @interface DSBLEHRMonitor : NSObject
 /// swtich
 @property (nonatomic) BOOL swtich;
-/// Interval Time for check HR, Default 30min, only support by FitbandN2.
+/// Interval Time for check HR, Default 30min, only support by DS-F9.
 @property (nonatomic) NSUInteger interval;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
@@ -1706,6 +1709,12 @@ SWIFT_CLASS("_TtC14DesayBluetooth12DSBLENoSleep")
 @end
 
 
+
+/// Device OTA file type, Only for BLE Protocol 2.0 Device
+typedef SWIFT_ENUM(uint8_t, DSBLEOTAFileType) {
+  DSBLEOTAFileTypeFramework = 0x00,
+  DSBLEOTAFileTypeAgps = 0x04,
+};
 
 
 /// PAI Heartrate
