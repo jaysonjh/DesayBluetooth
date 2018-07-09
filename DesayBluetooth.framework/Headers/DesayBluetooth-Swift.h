@@ -2196,6 +2196,8 @@ SWIFT_CLASS("_TtC14DesayBluetooth11DSBLESport2")
 @property (nonatomic, copy) NSDate * _Null_unspecified endTime;
 /// 类型
 @property (nonatomic) enum DSBLESportType sType;
+/// 数据，跑步为步数，其他暂时未支持
+@property (nonatomic) NSInteger data;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
