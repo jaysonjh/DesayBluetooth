@@ -190,6 +190,7 @@ typedef SWIFT_ENUM(NSInteger, APIState) {
 @class Band;
 @class Scales;
 @class Shoe;
+@class Tracker;
 @protocol DSBLEScanConnectDelegate;
 
 SWIFT_CLASS("_TtC14DesayBluetooth13BLEAPIManager")
@@ -207,6 +208,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, copy) NSString * _Nullable res
 @property (nonatomic, strong) Scales * _Nullable scales;
 /// 鞋子
 @property (nonatomic, strong) Shoe * _Nullable shoe;
+/// 追踪器
+@property (nonatomic, strong) Tracker * _Nullable tracker;
 /// mode
 @property (nonatomic) BOOL debug;
 - (void)setLogOnWithCode:(NSString * _Nonnull)code;
@@ -217,8 +220,6 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, copy) NSString * _Nullable res
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
 
-
-
 @class CBUUID;
 
 @interface BLEAPIManager (SWIFT_EXTENSION(DesayBluetooth))
@@ -227,6 +228,8 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, copy) NSString * _Nullable res
 /// 停止扫描
 - (void)stopScan;
 @end
+
+
 
 enum BLEManagerState : NSUInteger;
 
@@ -1200,6 +1203,7 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEAutoType) {
   DSBLEAutoTypeCalorie = 10,
   DSBLEAutoTypePai = 11,
   DSBLEAutoTypeSos = 12,
+  DSBLEAutoTypeBindResult = 13,
 };
 
 /// Send Func Type
@@ -1351,6 +1355,9 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEAutoType) {
 ///   <li>
 ///     Func_AlertDistance: Distance Alert for Band
 ///   </li>
+///   <li>
+///     Func_StepGoal: Goal achievement
+///   </li>
 /// </ul>
 typedef SWIFT_ENUM(NSUInteger, DSBLEBandFuncType) {
   DSBLEBandFuncTypeNone = 0,
@@ -1416,6 +1423,7 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEBandFuncType) {
   DSBLEBandFuncTypeDial = 60,
   DSBLEBandFuncTypeAge = 61,
   DSBLEBandFuncTypeBright = 62,
+  DSBLEBandFuncTypeStepGoal = 63,
 };
 
 enum DSBLEBindingState : NSUInteger;
@@ -1530,7 +1538,8 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEDeviceType) {
   DSBLEDeviceTypeScales = 1,
   DSBLEDeviceTypeShoe = 2,
   DSBLEDeviceTypeWatch = 3,
-  DSBLEDeviceTypeOther = 4,
+  DSBLEDeviceTypeTracker = 4,
+  DSBLEDeviceTypeOther = 5,
 };
 
 /// Display Mode (Just DS-D6,DS-D8)
@@ -1551,14 +1560,34 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEDisplayType) {
   DSBLEDisplayTypeLandscapeRight = 3,
 };
 
+/// Fish Cast type
+typedef SWIFT_ENUM(NSUInteger, DSBLEFishCastType) {
+  DSBLEFishCastTypeSPINNING = 0,
+  DSBLEFishCastTypeFLYFISHING = 1,
+  DSBLEFishCastTypeTROLLING = 2,
+  DSBLEFishCastTypeJIGGING = 3,
+  DSBLEFishCastTypeCARPMATCH = 4,
+  DSBLEFishCastTypeINSHORE = 5,
+  DSBLEFishCastTypePOLE = 6,
+};
+
+/// Fish Event type
+typedef SWIFT_ENUM(NSUInteger, DSBLEFishEventType) {
+  DSBLEFishEventTypeNULL = 0,
+  DSBLEFishEventTypeSTRIKE = 1,
+  DSBLEFishEventTypeCATCH = 2,
+  DSBLEFishEventTypeTROPHY = 3,
+  DSBLEFishEventTypeTACKLE_LOST = 4,
+};
+
 
 /// GPS Data
 SWIFT_CLASS("_TtC14DesayBluetooth8DSBLEGPS")
 @interface DSBLEGPS : NSObject
 /// longitude 经度
-@property (nonatomic) float longitude;
+@property (nonatomic) double longitude;
 /// latitude 纬度
-@property (nonatomic) float latitude;
+@property (nonatomic) double latitude;
 /// Time
 @property (nonatomic, copy) NSDate * _Nonnull time;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
@@ -1819,6 +1848,7 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEProtocolType) {
   DSBLEProtocolTypeScalesLF = 4,
   DSBLEProtocolTypeScalesCS = 5,
   DSBLEProtocolTypeShoeDS = 6,
+  DSBLEProtocolTypeTracker06 = 7,
 };
 
 
@@ -2251,6 +2281,8 @@ typedef SWIFT_ENUM(NSUInteger, DSBLESportType) {
   DSBLESportTypeWalk = 3,
   DSBLESportTypeStrength = 4,
   DSBLESportTypeFree = 5,
+  DSBLESportTypeSwim = 6,
+  DSBLESportTypeSevenMin = 7,
 };
 
 
@@ -2328,6 +2360,155 @@ typedef SWIFT_ENUM(NSUInteger, DSBLESyncSportType) {
 typedef SWIFT_ENUM(NSUInteger, DSBLETemperatureType) {
   DSBLETemperatureTypeNegative = 0,
   DSBLETemperatureTypePositive = 1,
+};
+
+/// Tracker Notify
+typedef SWIFT_ENUM(NSUInteger, DSBLETrackerAutoType) {
+/// Get all gsensor from Tracker
+  DSBLETrackerAutoTypeGsensor = 0,
+/// Get Cast result from Tracker
+  DSBLETrackerAutoTypeCast = 1,
+  DSBLETrackerAutoTypeOther = 2,
+};
+
+
+/// Tracker Cast Data
+SWIFT_CLASS("_TtC14DesayBluetooth16DSBLETrackerCast")
+@interface DSBLETrackerCast : NSObject
+@property (nonatomic) NSInteger maxX;
+@property (nonatomic) NSInteger minX;
+@property (nonatomic) NSInteger maxY;
+@property (nonatomic) NSInteger minY;
+@property (nonatomic) NSInteger maxZ;
+@property (nonatomic) NSInteger minZ;
+/// Fish type
+@property (nonatomic) enum DSBLEFishCastType fishType;
+/// Event type
+@property (nonatomic) enum DSBLEFishEventType eventType;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+
+
+
+
+/// Tracker Cast Log Data
+SWIFT_CLASS("_TtC14DesayBluetooth19DSBLETrackerCastLog")
+@interface DSBLETrackerCastLog : NSObject
+/// UTC Time
+@property (nonatomic, copy) NSDate * _Nonnull time;
+/// Battery
+@property (nonatomic) NSInteger battery;
+/// Fish type
+@property (nonatomic) enum DSBLEFishCastType fishType;
+/// Event type
+@property (nonatomic) enum DSBLEFishEventType eventType;
+/// total of Gsensor data
+@property (nonatomic) NSInteger pageNum;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+
+/// Send Func Type
+typedef SWIFT_ENUM(NSUInteger, DSBLETrackerFuncType) {
+/// <ul>
+///   <li>
+///     Func_None: defalt value
+///   </li>
+/// </ul>
+  DSBLETrackerFuncTypeNone = 0,
+/// <ul>
+///   <li>
+///     Func_Common: Can send command by bytes
+///   </li>
+/// </ul>
+  DSBLETrackerFuncTypeCommon = 1,
+/// <ul>
+///   <li>
+///     Func_Version: Get version of tracker
+///   </li>
+/// </ul>
+  DSBLETrackerFuncTypeVersion = 2,
+/// <ul>
+///   <li>
+///     Func_Time: Set Time
+///   </li>
+/// </ul>
+  DSBLETrackerFuncTypeTime = 3,
+/// <ul>
+///   <li>
+///     Func_Language: Language Setting
+///   </li>
+/// </ul>
+  DSBLETrackerFuncTypeLanguage = 4,
+/// <ul>
+///   <li>
+///     Func_DFU: Upgrade Tracker
+///   </li>
+/// </ul>
+  DSBLETrackerFuncTypeDfu = 5,
+/// <ul>
+///   <li>
+///     Func_24Hour: 12/24 Hour display
+///   </li>
+/// </ul>
+  DSBLETrackerFuncTypeHourSystem = 6,
+/// <ul>
+///   <li>
+///     Func_Gsensor: Get Gsensor coordinates
+///   </li>
+/// </ul>
+  DSBLETrackerFuncTypeGsensor = 7,
+/// <ul>
+///   <li>
+///     Func_Reset: Clean all data
+///   </li>
+/// </ul>
+  DSBLETrackerFuncTypeReset = 8,
+/// <ul>
+///   <li>
+///     Func_Cast: Setting cast type, event type and GSensor range
+///   </li>
+/// </ul>
+  DSBLETrackerFuncTypeCast = 9,
+/// <ul>
+///   <li>
+///     Func_Fish: Start or stop fish
+///   </li>
+/// </ul>
+  DSBLETrackerFuncTypeFish = 10,
+/// <ul>
+///   <li>
+///     Func_Reboot: Reboot Tracker
+///   </li>
+/// </ul>
+  DSBLETrackerFuncTypeReboot = 11,
+/// <ul>
+///   <li>
+///     Func_Bind: Bind Tracker
+///   </li>
+/// </ul>
+  DSBLETrackerFuncTypeBind = 12,
+/// <ul>
+///   <li>
+///     Func_Active: Active Tracker
+///   </li>
+/// </ul>
+  DSBLETrackerFuncTypeActive = 13,
+/// <ul>
+///   <li>
+///     Func_SN: Get SN of Tracker
+///   </li>
+/// </ul>
+  DSBLETrackerFuncTypeSn = 14,
+/// <ul>
+///   <li>
+///     Func_Battery: Get battery of Tracker
+///   </li>
+/// </ul>
+  DSBLETrackerFuncTypeBattery = 15,
 };
 
 /// Unit System
@@ -2533,6 +2714,16 @@ SWIFT_CLASS("_TtC14DesayBluetooth4Shoe")
 /// 同步代理
 @property (nonatomic, strong) id <DSBLESyncDelegate> _Nullable syncDelegate;
 - (void)makeFunc:(enum DSBLEShoeFuncType)funcType data:(id _Nullable)data callback:(void (^ _Nullable)(id _Nullable, BOOL, NSError * _Nullable))callback;
+@end
+
+
+SWIFT_CLASS("_TtC14DesayBluetooth7Tracker")
+@interface Tracker : Device
+/// 通知代理
+@property (nonatomic, copy) void (^ _Nullable notify)(enum DSBLETrackerAutoType, id _Nullable, NSError * _Nullable);
+/// 绑定代理
+@property (nonatomic, strong) id <DSBLEBindDelegate> _Nullable bindDelegate;
+- (void)makeFunc:(enum DSBLETrackerFuncType)funcType data:(id _Nullable)data callback:(void (^ _Nullable)(id _Nullable, BOOL, NSError * _Nullable))callback;
 @end
 
 #if __has_attribute(external_source_symbol)
