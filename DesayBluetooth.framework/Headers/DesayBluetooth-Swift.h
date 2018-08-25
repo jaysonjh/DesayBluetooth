@@ -1089,7 +1089,7 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEAlertType) {
 };
 
 
-/// ANCS提示设置类
+/// ANCS提示设置类.
 /// ANCS Setting class
 SWIFT_CLASS("_TtC14DesayBluetooth14DSBLEAppNotify")
 @interface DSBLEAppNotify : NSObject
@@ -2212,7 +2212,7 @@ SWIFT_CLASS("_TtC14DesayBluetooth10DSBLESport")
 @property (nonatomic) enum DSBLESyncSportType type;
 /// 类型
 @property (nonatomic) enum DSBLESportType sType;
-/// 步数
+/// 数据
 @property (nonatomic) NSUInteger step;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
