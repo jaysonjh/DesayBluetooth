@@ -220,15 +220,6 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, copy) NSString * _Nullable res
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
 
-@class CBUUID;
-
-@interface BLEAPIManager (SWIFT_EXTENSION(DesayBluetooth))
-- (void)scan;
-- (void)scanWithServices:(NSArray<CBUUID *> * _Nullable)serviceUUIDs options:(NSDictionary<NSString *, id> * _Nullable)options filterNames:(NSSet<NSString *> * _Nullable)filterNames;
-/// 停止扫描
-- (void)stopScan;
-@end
-
 
 
 enum BLEManagerState : NSUInteger;
@@ -263,6 +254,17 @@ enum BLEManagerState : NSUInteger;
 /// \param peripheral peripheral
 ///
 - (void)disconnectPeripheral:(BLEPeripheral * _Nullable)peripheral;
+@end
+
+@class CBUUID;
+
+@interface BLEAPIManager (SWIFT_EXTENSION(DesayBluetooth))
+- (void)scan;
+- (void)scanWithServices:(NSArray<CBUUID *> * _Nullable)serviceUUIDs options:(NSDictionary<NSString *, id> * _Nullable)options filterNames:(NSSet<NSString *> * _Nullable)filterNames;
+/// 停止扫描
+- (void)stopScan;
+/// 是否正在搜索
+@property (nonatomic, readonly) BOOL isScaning;
 @end
 
 @class CBCharacteristic;
@@ -2228,6 +2230,8 @@ SWIFT_CLASS("_TtC14DesayBluetooth11DSBLESport2")
 @property (nonatomic) enum DSBLESportType sType;
 /// 数据，跑步为步数，其他暂时未支持
 @property (nonatomic) NSInteger data;
+/// 卡路里，单位为卡
+@property (nonatomic) NSInteger cal;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
