@@ -220,8 +220,6 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, copy) NSString * _Nullable res
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
 
-
-
 enum BLEManagerState : NSUInteger;
 
 @interface BLEAPIManager (SWIFT_EXTENSION(DesayBluetooth))
@@ -230,6 +228,8 @@ enum BLEManagerState : NSUInteger;
 /// BLE State
 @property (nonatomic, readonly) enum BLEManagerState bleState;
 @end
+
+
 
 @class BLEPeripheral;
 
@@ -2642,6 +2642,8 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEWristingType) {
   DSBLEWristingTypeLeft = 2,
   DSBLEWristingTypeRight = 3,
 };
+
+
 
 
 
