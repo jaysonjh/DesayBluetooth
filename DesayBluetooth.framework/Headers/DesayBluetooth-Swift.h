@@ -1426,6 +1426,7 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEBandFuncType, closed) {
   DSBLEBandFuncTypeAge = 61,
   DSBLEBandFuncTypeBright = 62,
   DSBLEBandFuncTypeStepGoal = 63,
+  DSBLEBandFuncTypeClimate = 64,
 };
 
 enum DSBLEBindingState : NSUInteger;
@@ -1483,6 +1484,22 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEBrightType, closed) {
   DSBLEBrightTypeMedium = 1,
   DSBLEBrightTypeHigh = 2,
 };
+
+enum DSBLEWeatherState : NSUInteger;
+enum DSBLETemperatureType : NSUInteger;
+
+/// Climate,send temperature and weather state
+SWIFT_CLASS("_TtC14DesayBluetooth12DSBLEClimate")
+@interface DSBLEClimate : NSObject
+@property (nonatomic) enum DSBLEWeatherState weatherState;
+@property (nonatomic) enum DSBLETemperatureType type;
+@property (nonatomic) NSInteger temperature;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+
+
 
 
 /// DFU 过程
@@ -1575,11 +1592,9 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEFishCastType, closed) {
 
 /// Fish Event type
 typedef SWIFT_ENUM(NSUInteger, DSBLEFishEventType, closed) {
-  DSBLEFishEventTypeNULL = 0,
-  DSBLEFishEventTypeSTRIKE = 1,
-  DSBLEFishEventTypeCATCH = 2,
-  DSBLEFishEventTypeTROPHY = 3,
-  DSBLEFishEventTypeTACKLE_LOST = 4,
+  DSBLEFishEventTypeCAST = 0,
+  DSBLEFishEventTypeCATCH = 1,
+  DSBLEFishEventTypeMARKER = 2,
 };
 
 
@@ -2600,6 +2615,28 @@ SWIFT_CLASS("_TtC14DesayBluetooth12DSBLEWeather")
 
 
 
+
+/// weather state
+typedef SWIFT_ENUM(NSUInteger, DSBLEWeatherState, closed) {
+/// 多云
+  DSBLEWeatherStateCloudy = 0,
+/// 雷
+  DSBLEWeatherStateThunder = 1,
+/// 晴天
+  DSBLEWeatherStateFine = 2,
+/// 乌云
+  DSBLEWeatherStateDarkClouds = 3,
+/// 雾
+  DSBLEWeatherStateFog = 4,
+/// 雪
+  DSBLEWeatherStateSnow = 5,
+/// 雨
+  DSBLEWeatherStateRain = 6,
+/// 少云
+  DSBLEWeatherStatePartlyCloudy = 7,
+/// 阵雨
+  DSBLEWeatherStateShower = 8,
+};
 
 enum DSBLEWristingType : NSUInteger;
 
