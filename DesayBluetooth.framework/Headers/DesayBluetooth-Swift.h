@@ -220,8 +220,6 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, copy) NSString * _Nullable res
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
 
-
-
 enum BLEManagerState : NSUInteger;
 
 @interface BLEAPIManager (SWIFT_EXTENSION(DesayBluetooth))
@@ -278,6 +276,8 @@ enum BLEManagerState : NSUInteger;
 - (void)peripheral:(BLEPeripheral * _Nonnull)peripheral isReady:(BOOL)isReady error:(NSError * _Nullable)error;
 - (void)peripheral:(BLEPeripheral * _Nonnull)peripheral didUpdateValueFor:(CBCharacteristic * _Nonnull)characteristic error:(NSError * _Nullable)error;
 @end
+
+
 
 @protocol DSBLEDFUDelegate;
 @class DSBLEDFUSet;
@@ -1998,7 +1998,6 @@ SWIFT_CLASS("_TtC14DesayBluetooth14DSBLESedentary")
 /// During this time,bracelet will calculate the steps,if not reach the min steps,bracelet will notify user.
 /// 30=30 Min
 /// 60=60 Min
-/// 75=75 Min
 /// 90=90 Min
 @property (nonatomic) NSUInteger sedentaryTime;
 /// Yes for Sedentary reminder ON
