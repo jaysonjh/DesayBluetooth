@@ -229,17 +229,6 @@ enum BLEManagerState : NSUInteger;
 @property (nonatomic, readonly) enum BLEManagerState bleState;
 @end
 
-@class CBUUID;
-
-@interface BLEAPIManager (SWIFT_EXTENSION(DesayBluetooth))
-- (void)scan;
-- (void)scanWithServices:(NSArray<CBUUID *> * _Nullable)serviceUUIDs options:(NSDictionary<NSString *, id> * _Nullable)options filterNames:(NSSet<NSString *> * _Nullable)filterNames;
-/// 停止扫描
-- (void)stopScan;
-/// 是否正在搜索
-@property (nonatomic, readonly) BOOL isScaning;
-@end
-
 @class BLEPeripheral;
 @class Device;
 
@@ -266,6 +255,17 @@ enum BLEManagerState : NSUInteger;
 - (void)disconnectPeripheral:(BLEPeripheral * _Nullable)peripheral;
 /// 断开连接
 - (void)disconnectDevice:(Device * _Nullable)device;
+@end
+
+@class CBUUID;
+
+@interface BLEAPIManager (SWIFT_EXTENSION(DesayBluetooth))
+- (void)scan;
+- (void)scanWithServices:(NSArray<CBUUID *> * _Nullable)serviceUUIDs options:(NSDictionary<NSString *, id> * _Nullable)options filterNames:(NSSet<NSString *> * _Nullable)filterNames;
+/// 停止扫描
+- (void)stopScan;
+/// 是否正在搜索
+@property (nonatomic, readonly) BOOL isScaning;
 @end
 
 @class CBCharacteristic;
@@ -335,43 +335,10 @@ SWIFT_CLASS("_TtC14DesayBluetooth13BLEPeripheral")
 SWIFT_CLASS("_TtC14DesayBluetooth17BLESleepAlgorithm")
 @interface BLESleepAlgorithm : NSObject
 /// 分析睡眠数据
+/// analyze sleep data
 /// @param rawData 睡眠原始数据
 /// @return 睡眠状态 NSArray<WMSleepInfo *>
-- (NSArray<DSBLESleepInfo *> * _Nullable)analyzeSleepRawData:(NSArray<DSBLESleepBlock *> * _Nonnull)rawData SWIFT_WARN_UNUSED_RESULT;
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
-@end
-
-
-SWIFT_CLASS("_TtC14DesayBluetooth30BLESleepAlgorithmConfiguration")
-@interface BLESleepAlgorithmConfiguration : NSObject
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull kDSBLEConfigurationFileName;)
-+ (NSString * _Nonnull)kDSBLEConfigurationFileName SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull kDSBLEDayMaxTimeDeepSleep;)
-+ (NSString * _Nonnull)kDSBLEDayMaxTimeDeepSleep SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull kDSBLENightMaxTimeDeepSleep;)
-+ (NSString * _Nonnull)kDSBLENightMaxTimeDeepSleep SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull kDSBLEPercLightSleep;)
-+ (NSString * _Nonnull)kDSBLEPercLightSleep SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull kDSBLEWakeup;)
-+ (NSString * _Nonnull)kDSBLEWakeup SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull kDSBLEDaySleepTime;)
-+ (NSString * _Nonnull)kDSBLEDaySleepTime SWIFT_WARN_UNUSED_RESULT;
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, copy) NSString * _Nonnull kDSBLEOtherSleepTime;)
-+ (NSString * _Nonnull)kDSBLEOtherSleepTime SWIFT_WARN_UNUSED_RESULT;
-/// 单例 加载默认设置
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BLESleepAlgorithmConfiguration * _Nonnull shared;)
-+ (BLESleepAlgorithmConfiguration * _Nonnull)shared SWIFT_WARN_UNUSED_RESULT;
-/// 单例 从文件中读取睡眠参数(用于日后可以网络下载参数，进行算法的变更)
-SWIFT_CLASS_PROPERTY(@property (nonatomic, class, readonly, strong) BLESleepAlgorithmConfiguration * _Nonnull sharedFromUserDefault;)
-+ (BLESleepAlgorithmConfiguration * _Nonnull)sharedFromUserDefault SWIFT_WARN_UNUSED_RESULT;
-- (nonnull instancetype)init SWIFT_UNAVAILABLE;
-+ (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
-@end
-
-
-SWIFT_CLASS("_TtC14DesayBluetooth19BLESleepAlgorithmF8")
-@interface BLESleepAlgorithmF8 : NSObject
-- (DSBLESleepInfo * _Nullable)analyzeSleepRawData:(NSArray<DSBLESleepBlock *> * _Nonnull)rawData SWIFT_WARN_UNUSED_RESULT;
+- (NSArray<DSBLESleepInfo *> * _Nullable)analyzeSleepRawData:(NSArray<DSBLESleepBlock *> * _Nonnull)rawData deviceName:(NSString * _Nonnull)deviceName SWIFT_WARN_UNUSED_RESULT;
 - (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
@@ -429,6 +396,11 @@ SWIFT_CLASS("_TtC14DesayBluetooth7BLEUtil")
 /// returns:
 /// 是否配对
 + (BOOL)isPairByIdentifier:(NSString * _Nonnull)identifier SWIFT_WARN_UNUSED_RESULT;
+- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
+@end
+
+
+@interface BLEUtil (SWIFT_EXTENSION(DesayBluetooth))
 /// 卡路里计算公式
 /// \param weight 重量 千克
 ///
@@ -454,7 +426,6 @@ SWIFT_CLASS("_TtC14DesayBluetooth7BLEUtil")
 /// returns:
 /// 开始时间
 + (NSDate * _Nonnull)stepStartTimeBy:(NSDate * _Nonnull)endTime SWIFT_WARN_UNUSED_RESULT;
-- (nonnull instancetype)init OBJC_DESIGNATED_INITIALIZER;
 @end
 
 
@@ -1430,6 +1401,7 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEBandFuncType, closed) {
   DSBLEBandFuncTypeBright = 62,
   DSBLEBandFuncTypeStepGoal = 63,
   DSBLEBandFuncTypeClimate = 64,
+  DSBLEBandFuncTypeTextDisplay = 65,
 };
 
 enum DSBLEBindingState : NSUInteger;
@@ -2385,6 +2357,20 @@ typedef SWIFT_ENUM(NSUInteger, DSBLESyncSportType, closed) {
 typedef SWIFT_ENUM(NSUInteger, DSBLETemperatureType, closed) {
   DSBLETemperatureTypeNegative = 0,
   DSBLETemperatureTypePositive = 1,
+};
+
+/// Text Display Mode (Just DS-D6,DS-D8)
+/// <ul>
+///   <li>
+///     Portrait          Text Display: Portrait
+///   </li>
+///   <li>
+///     Landscape         Text Display: Landscape
+///   </li>
+/// </ul>
+typedef SWIFT_ENUM(NSUInteger, DSBLETextDisplayType, closed) {
+  DSBLETextDisplayTypePortrait = 1,
+  DSBLETextDisplayTypeLandscape = 0,
 };
 
 /// Tracker Notify
