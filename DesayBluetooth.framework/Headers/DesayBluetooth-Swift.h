@@ -229,8 +229,29 @@ enum BLEManagerState : NSUInteger;
 @property (nonatomic, readonly) enum BLEManagerState bleState;
 @end
 
+@class CBUUID;
+
+@interface BLEAPIManager (SWIFT_EXTENSION(DesayBluetooth))
+- (void)scan;
+- (void)scanWithServices:(NSArray<CBUUID *> * _Nullable)serviceUUIDs options:(NSDictionary<NSString *, id> * _Nullable)options filterNames:(NSSet<NSString *> * _Nullable)filterNames;
+/// 停止扫描
+- (void)stopScan;
+/// 是否正在搜索
+@property (nonatomic, readonly) BOOL isScaning;
+@end
+
 @class BLEPeripheral;
+@class CBCharacteristic;
+
+@interface BLEAPIManager (SWIFT_EXTENSION(DesayBluetooth))
+- (void)didUpdateState:(enum BLEManagerState)state;
+- (void)didDiscoverPeripheral:(BLEPeripheral * _Nonnull)peripheral;
+- (void)peripheral:(BLEPeripheral * _Nonnull)peripheral isReady:(BOOL)isReady error:(NSError * _Nullable)error;
+- (void)peripheral:(BLEPeripheral * _Nonnull)peripheral didUpdateValueFor:(CBCharacteristic * _Nonnull)characteristic error:(NSError * _Nullable)error;
+@end
+
 @class Device;
+@class DSBLEDevice;
 
 @interface BLEAPIManager (SWIFT_EXTENSION(DesayBluetooth))
 /// Mac连接
@@ -255,26 +276,8 @@ enum BLEManagerState : NSUInteger;
 - (void)disconnectPeripheral:(BLEPeripheral * _Nullable)peripheral;
 /// 断开连接
 - (void)disconnectDevice:(Device * _Nullable)device;
-@end
-
-@class CBUUID;
-
-@interface BLEAPIManager (SWIFT_EXTENSION(DesayBluetooth))
-- (void)scan;
-- (void)scanWithServices:(NSArray<CBUUID *> * _Nullable)serviceUUIDs options:(NSDictionary<NSString *, id> * _Nullable)options filterNames:(NSSet<NSString *> * _Nullable)filterNames;
-/// 停止扫描
-- (void)stopScan;
-/// 是否正在搜索
-@property (nonatomic, readonly) BOOL isScaning;
-@end
-
-@class CBCharacteristic;
-
-@interface BLEAPIManager (SWIFT_EXTENSION(DesayBluetooth))
-- (void)didUpdateState:(enum BLEManagerState)state;
-- (void)didDiscoverPeripheral:(BLEPeripheral * _Nonnull)peripheral;
-- (void)peripheral:(BLEPeripheral * _Nonnull)peripheral isReady:(BOOL)isReady error:(NSError * _Nullable)error;
-- (void)peripheral:(BLEPeripheral * _Nonnull)peripheral didUpdateValueFor:(CBCharacteristic * _Nonnull)characteristic error:(NSError * _Nullable)error;
+/// 正在连接的设备列表
+- (NSArray<DSBLEDevice *> * _Nonnull)pairedDevice SWIFT_WARN_UNUSED_RESULT;
 @end
 
 
@@ -1402,6 +1405,7 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEBandFuncType, closed) {
   DSBLEBandFuncTypeStepGoal = 63,
   DSBLEBandFuncTypeClimate = 64,
   DSBLEBandFuncTypeTextDisplay = 65,
+  DSBLEBandFuncTypeMac = 66,
 };
 
 enum DSBLEBindingState : NSUInteger;
