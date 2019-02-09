@@ -1844,11 +1844,12 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEProtocolType, closed) {
   DSBLEProtocolTypeOther = 0,
   DSBLEProtocolTypeBand1_103 = 1,
   DSBLEProtocolTypeBand1_521 = 2,
-  DSBLEProtocolTypeBand2 = 3,
-  DSBLEProtocolTypeScalesLF = 4,
-  DSBLEProtocolTypeScalesCS = 5,
-  DSBLEProtocolTypeShoeDS = 6,
-  DSBLEProtocolTypeTracker06 = 7,
+  DSBLEProtocolTypeBand1_Z18 = 3,
+  DSBLEProtocolTypeBand2 = 4,
+  DSBLEProtocolTypeScalesLF = 5,
+  DSBLEProtocolTypeScalesCS = 6,
+  DSBLEProtocolTypeShoeDS = 7,
+  DSBLEProtocolTypeTracker06 = 8,
 };
 
 
