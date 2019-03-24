@@ -222,15 +222,6 @@ SWIFT_CLASS_PROPERTY(@property (nonatomic, class, copy) NSString * _Nullable res
 + (nonnull instancetype)new SWIFT_DEPRECATED_MSG("-init is unavailable");
 @end
 
-enum BLEManagerState : NSUInteger;
-
-@interface BLEAPIManager (SWIFT_EXTENSION(DesayBluetooth))
-/// 版本
-- (NSString * _Nonnull)version SWIFT_WARN_UNUSED_RESULT;
-/// BLE State
-@property (nonatomic, readonly) enum BLEManagerState bleState;
-@end
-
 @class CBUUID;
 
 @interface BLEAPIManager (SWIFT_EXTENSION(DesayBluetooth))
@@ -240,6 +231,15 @@ enum BLEManagerState : NSUInteger;
 - (void)stopScan;
 /// 是否正在搜索
 @property (nonatomic, readonly) BOOL isScaning;
+@end
+
+enum BLEManagerState : NSUInteger;
+
+@interface BLEAPIManager (SWIFT_EXTENSION(DesayBluetooth))
+/// 版本
+- (NSString * _Nonnull)version SWIFT_WARN_UNUSED_RESULT;
+/// BLE State
+@property (nonatomic, readonly) enum BLEManagerState bleState;
 @end
 
 @class BLEPeripheral;
@@ -1683,6 +1683,8 @@ SWIFT_CLASS("_TtC14DesayBluetooth11DSBLEDevice")
 @property (nonatomic, readonly, strong) DSBLEScalesData * _Nullable scalesData;
 /// power (50 = 50%)
 @property (nonatomic, readonly) NSInteger power;
+/// Name
+@property (nonatomic, readonly, copy) NSString * _Nonnull name;
 @end
 
 typedef SWIFT_ENUM(NSUInteger, DSBLEDeviceType, closed) {
@@ -2004,6 +2006,7 @@ typedef SWIFT_ENUM(NSUInteger, DSBLEProtocolType, closed) {
   DSBLEProtocolTypeScalesCS = 6,
   DSBLEProtocolTypeShoeDS = 7,
   DSBLEProtocolTypeTracker06 = 8,
+  DSBLEProtocolTypeBand_Freq = 9,
 };
 
 
@@ -2344,6 +2347,9 @@ typedef SWIFT_ENUM(NSUInteger, DSBLESleepType, closed) {
 ///   <li>
 ///     12 deep: Deep Sleep
 ///   </li>
+///   <li>
+///     13 invalid: Not to wear
+///   </li>
 /// </ul>
 typedef SWIFT_ENUM(NSUInteger, DSBLESleepValueType, closed) {
   DSBLESleepValueTypeNone = 0,
@@ -2352,6 +2358,7 @@ typedef SWIFT_ENUM(NSUInteger, DSBLESleepValueType, closed) {
   DSBLESleepValueTypeRun = 3,
   DSBLESleepValueTypeLight = 11,
   DSBLESleepValueTypeDeep = 12,
+  DSBLESleepValueTypeInvalid = 13,
 };
 
 enum DSBLESyncSportType : NSUInteger;
