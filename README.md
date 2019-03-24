@@ -1,6 +1,6 @@
 # DesayBluetooth
 Pod Framework for DesayBluetooth
 
-# Install and Use
+# Documents
 English: 
 Chinese:
