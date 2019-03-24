@@ -18,7 +18,6 @@
 #endif
 #endif
 
-#import "IntelHex2BinConverter.h"
 #import "HTBodyfat_SDK.h"
 #import "ChipseaScaleSDK.h"
 
