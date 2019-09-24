@@ -11,7 +11,7 @@ s.libraries = "z"
 s.platform     = :ios
 s.ios.deployment_target = "9.0"
 s.requires_arc = true
-s.source       = { :git => "git@github.com:jaysonjh/DesayBluetooth.git", :tag => s.version.to_s }
+s.source       = { :git => "https://github.com/jaysonjh/DesayBluetooth.git", :tag => s.version.to_s }
 
 s.vendored_framework   = '*.framework'
 # Nordic iOS DFULibrary
