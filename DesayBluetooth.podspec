@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name = "DesayBluetooth"
-s.version = "2.4.4"
+s.version = "2.4.5"
 s.summary = "DesayBluetooth is a Bluetooth library"
 s.license = "MIT"
 s.authors = {"Desay"=>"jaysonj@163.com"}
@@ -15,6 +15,6 @@ s.source       = { :git => "https://github.com/jaysonjh/DesayBluetooth.git", :ta
 
 s.vendored_framework   = '*.framework'
 # Nordic iOS DFULibrary
-s.dependency 'iOSDFULibrary', '~>4.5'
+s.dependency 'iOSDFULibrary', '~>4.6'
 s.swift_versions = ['4.2','5.0']
 end
