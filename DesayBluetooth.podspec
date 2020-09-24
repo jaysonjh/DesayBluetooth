@@ -18,4 +18,10 @@ s.vendored_framework   = '*.framework'
 s.dependency 'iOSDFULibrary', '~>4.8'
 # s.swift_versions = ['4.2','5.0']
 s.swift_version = '5.0'
+##  Fix Pod trunk push command Failed with Xcode12
+s.pod_target_xcconfig = {
+    'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64'
+  }
+s.user_target_xcconfig = { 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'arm64' }
+## End Fix
 end
