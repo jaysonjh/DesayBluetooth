@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name = "DesayBluetooth"
-s.version = "2.7.0"
+s.version = "2.7.1"
 s.summary = "DesayBluetooth is a Bluetooth library"
 s.license = "MIT"
 s.authors = {"Desay"=>"jaysonj@163.com"}
