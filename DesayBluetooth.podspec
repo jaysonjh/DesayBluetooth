@@ -9,7 +9,7 @@ s.frameworks = "CoreBluetooth"
 s.libraries = "z"
 
 s.platform     = :ios
-s.ios.deployment_target = "9.0"
+s.ios.deployment_target = "11.0"
 s.requires_arc = true
 s.source       = { :git => "https://github.com/jaysonjh/DesayBluetooth.git", :tag => s.version.to_s }
 
