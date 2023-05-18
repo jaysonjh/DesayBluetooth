@@ -15,7 +15,7 @@ s.source       = { :git => "https://github.com/jaysonjh/DesayBluetooth.git", :ta
 
 s.vendored_framework   = '*.framework'
 # Nordic iOS DFULibrary
-s.dependency 'iOSDFULibrary', '~>4.11'
+s.dependency 'iOSDFULibrary', '~>4.13'
 s.swift_versions   = ['5.0', '5.1', '5.2', '5.3', '5.4', '5.5', '5.6']
 # s.swift_version = '5.0'
 ##  Fix Pod trunk push command Failed with Xcode12
